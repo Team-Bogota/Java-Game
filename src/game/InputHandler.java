@@ -15,7 +15,6 @@ public class InputHandler implements KeyListener {
 
     public InputHandler(Display display) {
         display.getCanvas().addKeyListener(this);
-
     }
 
     @Override
@@ -25,33 +24,31 @@ public class InputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT) {
-            this.left = true;
-        } else if (keyCode == KeyEvent.VK_RIGHT) {
-            this.right = true;
-        } else if (keyCode == KeyEvent.VK_UP) {
-            this.rotate = true;
-        } else if (keyCode == KeyEvent.VK_DOWN) {
-            this.down = true;
-        } else if (keyCode == KeyEvent.VK_P) {
-            this.pause = true;
+        if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
+            left = true;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)) {
+            right = true;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)) {
+            down = true;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.rotate)) {
+            rotate = true;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)) {
+            pause = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT) {
-            this.left = false;
-        } else if (keyCode == KeyEvent.VK_RIGHT) {
-            this.right = false;
-        } else if (keyCode == KeyEvent.VK_UP) {
-            this.rotate = false;
-        } else if (keyCode == KeyEvent.VK_DOWN) {
-            this.down = false;
-        } else if (keyCode == KeyEvent.VK_P) {
-            this.pause = false;
+        if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
+            left = false;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)) {
+            right = false;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)) {
+            down = false;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.rotate)) {
+            rotate = false;
+        } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)) {
+            pause = false;
         }
     }
 }
