@@ -44,44 +44,32 @@ public class Display extends Canvas{
         bar.add(file);
 
         JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New game starting...");
-                //TODO : logic to start new game;
-            }
+        newGame.addActionListener((e -> {
+            System.out.println("New game starting...");
+            //TODO : logic to start new game;
         }));
 
         JMenuItem highScore = new JMenuItem("Highscore");
-        highScore.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                //TODO : this highscore must be changed whit real one
-                int highScore = 0;
-                JFrame alert = new JFrame("High Score");
-                alert.setSize(200, 150);
-                alert.setLayout(null);
-                alert.setLocationRelativeTo(null);
-                JLabel score = new JLabel("The highscore is: " + highScore);
-                score.setBounds(0,0,200,50);
-                JButton okayButton = new JButton("Okay");
-                okayButton.setBounds(50,80,100,30);
-                alert.setResizable(false);
-                alert.setVisible(true);
-                okayButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        alert.dispose();
-                    }
-                });
-                alert.add(score);
-                alert.add(okayButton);
-            }
+        highScore.addActionListener((e -> {
+            //TODO : this highscore must be changed whit real one
+            int testHighScore = 0;
+            JFrame alert = new JFrame("High Score");
+            alert.setSize(200, 150);
+            alert.setLayout(null);
+            alert.setLocationRelativeTo(null);
+            JLabel score = new JLabel("The highscore is: " + testHighScore);
+            score.setBounds(0,0,200,50);
+            JButton okayButton = new JButton("Okay");
+            okayButton.setBounds(50,80,100,30);
+            alert.setResizable(false);
+            alert.setVisible(true);
+            okayButton.addActionListener(e1 -> alert.dispose());
+            alert.add(score);
+            alert.add(okayButton);
         }));
 
         JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                System.exit(0);
-            }
-        }));
+        exit.addActionListener((e -> System.exit(0)));
 
         file.add(newGame);
         file.add(highScore);
