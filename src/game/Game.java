@@ -1,5 +1,9 @@
 package game;
 
-public class Game {
+public class Game implements Runnable {
 
+    @Override
+    public void run() {
+
+    }
 }

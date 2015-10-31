@@ -1,5 +1,7 @@
 package display;
 
-public class Display {
+import java.awt.*;
+
+public class Display extends Canvas {
 
 }
