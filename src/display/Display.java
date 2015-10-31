@@ -2,8 +2,10 @@ package display;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Display extends Canvas {
+public class Display extends Canvas{
     private String title;
     private int width, height;
 
@@ -35,6 +37,58 @@ public class Display extends Canvas {
         this.canvas.setMaximumSize(dimensions);
         this.canvas.setMinimumSize(dimensions);
 
+        JMenuBar bar = new JMenuBar();
+        bar.setBounds(0, 0, this.width, 25);
+        JMenu file = new JMenu("File");
+        file.setBounds(0,0,45,24);
+        bar.add(file);
+
+        JMenuItem newGame = new JMenuItem("New Game");
+        newGame.addActionListener((new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Starting new game..");
+                //TODO : logic to start new game;
+            }
+        }));
+
+        JMenuItem highScore = new JMenuItem("Highscore");
+        newGame.addActionListener((new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                //TODO : logic to display highscore;
+                int highScore = 0;
+                JFrame alert = new JFrame("High Score");
+                alert.setSize(200, 100);
+                alert.setLayout(null);
+                alert.setLocationRelativeTo(null);
+                alert.setVisible(true);
+                alert.setResizable(false);
+
+                JLabel score = new JLabel("The highscore is: " + highScore);
+                score.setBounds(0,0,200,50);
+
+                JButton okayButton = new JButton("Okay");
+                okayButton.setBounds(50,120,100,30);
+                okayButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        alert.dispose();
+                    }
+                });
+                alert.add(score);
+                alert.add(okayButton);
+            }
+        }));
+
+        JMenuItem exit = new JMenuItem("Exit");
+        newGame.addActionListener((new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        }));
+
+        file.add(newGame);
+        file.add(highScore);
+        file.add(exit);
+        this.frame.add(bar);
         this.frame.add(this.canvas);
         this.frame.pack();
     }
