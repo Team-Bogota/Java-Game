@@ -46,28 +46,26 @@ public class Display extends Canvas{
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.addActionListener((new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Starting new game..");
+                System.out.println("New game starting...");
                 //TODO : logic to start new game;
             }
         }));
 
         JMenuItem highScore = new JMenuItem("Highscore");
-        newGame.addActionListener((new ActionListener() {
+        highScore.addActionListener((new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                //TODO : logic to display highscore;
+                //TODO : this highscore must be changed whit real one
                 int highScore = 0;
                 JFrame alert = new JFrame("High Score");
-                alert.setSize(200, 100);
+                alert.setSize(200, 150);
                 alert.setLayout(null);
                 alert.setLocationRelativeTo(null);
-                alert.setVisible(true);
-                alert.setResizable(false);
-
                 JLabel score = new JLabel("The highscore is: " + highScore);
                 score.setBounds(0,0,200,50);
-
                 JButton okayButton = new JButton("Okay");
-                okayButton.setBounds(50,120,100,30);
+                okayButton.setBounds(50,80,100,30);
+                alert.setResizable(false);
+                alert.setVisible(true);
                 okayButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         alert.dispose();
@@ -79,7 +77,7 @@ public class Display extends Canvas{
         }));
 
         JMenuItem exit = new JMenuItem("Exit");
-        newGame.addActionListener((new ActionListener() {
+        exit.addActionListener((new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 System.exit(0);
             }
