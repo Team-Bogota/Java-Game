@@ -18,6 +18,8 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics graphics;
 
+    private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -44,6 +46,11 @@ public class Game implements Runnable {
         this.graphics = this.bs.getDrawGraphics();
 
         this.graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 0, null);
+
+        this.graphics.setFont(statsFont);
+        //this.graphics.drawString("12", 270, 254);
+        //this.graphics.drawString("3698", 270, 304);
+        //this.graphics.drawString("987", 270, 354);
 
         this.bs.show();
         this.graphics.dispose();
