@@ -13,7 +13,7 @@ public class MenuState extends State {
     private Graphics graphics;
 
     public MenuState() {
-        this.display = new Display("MenuState", "Tetris", 456, 527);
+       //this.display = new Display("MenuState", "Tetris", 456, 527);
     }
 
     @Override

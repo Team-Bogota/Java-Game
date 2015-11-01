@@ -1,9 +1,13 @@
 package display;
 
+import game.Config;
+import game.KeyGetter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Display extends Canvas{
     private String title;
@@ -37,6 +41,13 @@ public class Display extends Canvas{
         this.canvas.setMaximumSize(dimensions);
         this.canvas.setMinimumSize(dimensions);
 
+        KeyGetter.loadKeys();
+        try {
+            Config.loadConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         JMenuBar bar = new JMenuBar();
         bar.setBounds(0, 0, this.width, 25);
         JMenu file = new JMenu("File");
@@ -44,49 +55,42 @@ public class Display extends Canvas{
         bar.add(file);
 
         JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Starting new game..");
-                //TODO : logic to start new game;
-            }
+        newGame.addActionListener((e -> {
+            System.out.println("Starting new game..");
+            //TODO : logic to start new game;
         }));
 
         JMenuItem highScore = new JMenuItem("Highscore");
-        newGame.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                //TODO : logic to display highscore;
-                int highScore = 0;
-                JFrame alert = new JFrame("High Score");
-                alert.setSize(200, 100);
-                alert.setLayout(null);
-                alert.setLocationRelativeTo(null);
-                alert.setVisible(true);
-                alert.setResizable(false);
+        highScore.addActionListener((e -> {
+            //TODO : logic to display highscore;
+            int testHighScore = 0;
+            JFrame alert = new JFrame("High Score");
+            alert.setSize(200, 150);
+            alert.setLayout(null);
+            alert.setLocationRelativeTo(null);
+            alert.setResizable(false);
+            alert.setVisible(true);
+            alert.setResizable(false);
 
-                JLabel score = new JLabel("The highscore is: " + highScore);
-                score.setBounds(0,0,200,50);
+            JLabel score = new JLabel("The highscore is: " + testHighScore);
+            score.setBounds(0,0,200,50);
 
-                JButton okayButton = new JButton("Okay");
-                okayButton.setBounds(50,120,100,30);
-                okayButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        alert.dispose();
-                    }
-                });
-                alert.add(score);
-                alert.add(okayButton);
-            }
+            JButton okayButton = new JButton("Okay");
+            okayButton.setBounds(50,80,100,30);
+            okayButton.addActionListener(e1 -> alert.dispose());
+            alert.add(score);
+            alert.add(okayButton);
         }));
 
         JMenuItem exit = new JMenuItem("Exit");
-        newGame.addActionListener((new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                System.exit(0);
-            }
-        }));
+        exit.addActionListener((e -> System.exit(0)));
+
+        JMenuItem options = new JMenuItem("Options");
+        options.addActionListener(e -> Config.openConfig(frame));
 
         file.add(newGame);
         file.add(highScore);
+        file.add(options);
         file.add(exit);
         this.frame.add(bar);
         this.frame.add(this.canvas);

@@ -17,6 +17,7 @@ public class Game implements Runnable {
     private Display display;
     private BufferStrategy bs;
     private Graphics graphics;
+    private InputHandler inputHandler;
 
     private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
 
@@ -29,6 +30,7 @@ public class Game implements Runnable {
 
     private void init() {
         this.display = new Display(title, width, height);
+        this.inputHandler = new InputHandler(this.display);
     }
 
     private void tick() {
