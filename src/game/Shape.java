@@ -20,13 +20,35 @@ public class Shape {
 
     private int[][] coords;
 
+
+    private int x;
+    private int y;
+
     public Shape() {
-        this.shape = setRandomShape();
+        this.shape = getRandomShape();
         this.setCoords(this.shape);
+        this.x = 4;
+        this.y = 0;
     }
 
     public int[][] getCoords() {
         return coords;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void rotateLeft() {
@@ -49,7 +71,7 @@ public class Shape {
         coords = rotatedCoords;
     }
 
-    private Tetrominoes setRandomShape() {
+    private Tetrominoes getRandomShape() {
         Random rnd = new Random();
         int x = rnd.nextInt(7) + 1;
         Tetrominoes[] values = Tetrominoes.values();

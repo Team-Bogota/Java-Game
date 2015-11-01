@@ -21,6 +21,13 @@ public class GameState extends State {
 
     private int[][] board;
 
+    private Shape currentShape;
+    private Shape nextShape;
+
+    private int x;
+    private int y;
+
+
     private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
 
 
@@ -30,13 +37,21 @@ public class GameState extends State {
         this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
 
         this.board = new int[20][10];
+
+        this.currentShape = new Shape();
+        this.nextShape = new Shape();
     }
 
 
     @Override
     public void tick() {
         try {
-            Thread.sleep(100);
+            currentShape.setY(currentShape.getY() + 1);
+            if (currentShape.getY() > 18) {
+                this.currentShape = this.nextShape;
+                this.nextShape = new Shape();
+            }
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -55,12 +70,29 @@ public class GameState extends State {
 
         graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 25, null);
 
-        // THIS IS SOME RANDOM BLOCKS PRINTING JUST FOR TEST PURPOSE
-
+        // PRINT ALL BLOCKS FROM THE GAME BOARD
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[row].length; col++) {
                 int color = this.board[row][col];
                 this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), (1 + col) * 24, (2 + row) * 24, null);
+            }
+        }
+        // PRINT CURRENT ELEMENT
+        for (int row = 0; row < this.currentShape.getCoords().length; row++) {
+            for (int col = 0; col < this.currentShape.getCoords()[row].length; col++) {
+                int color = this.currentShape.getCoords()[row][col];
+                if (color != 0) {
+                    this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), (1 + col + currentShape.getX()) * 24, (2 + row + currentShape.getY()) * 24, null);
+                }
+            }
+        }
+        // PRINT NEXT ELEMENT
+        for (int row = 0; row < this.nextShape.getCoords().length; row++) {
+            for (int col = 0; col < this.nextShape.getCoords()[row].length; col++) {
+                int color = this.nextShape.getCoords()[row][col];
+                if (color != 0) {
+                    this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), 322 + col * 24, 100 + row * 24, null);
+                }
             }
         }
 
@@ -68,8 +100,6 @@ public class GameState extends State {
         //this.graphics.drawString("12", 270, 254);
         //this.graphics.drawString("3698", 270, 304);
         //this.graphics.drawString("987", 270, 354);
-
-        // END OF TEST PRINTING
 
         this.bs.show();
         graphics.dispose();
