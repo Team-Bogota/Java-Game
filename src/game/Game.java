@@ -19,7 +19,7 @@ public class Game implements Runnable {
     private void init() {
 
         // Setting the starting state to be the GameState. The starting state in the future will be changed to MenuState() // AleksandarTanev
-        StateManager.setState(new GameState("Tetris", 456, 528));
+        StateManager.setState(new GameState("Tetris", 456, 553));
     }
 
     private void tick() {

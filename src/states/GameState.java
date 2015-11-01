@@ -43,14 +43,14 @@ public class GameState extends State {
         }
         graphics = this.bs.getDrawGraphics();
 
-        graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 0, null);
+        graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 25, null);
 
         // THIS IS SOME RANDOM BLOCKS PRINTING JUST FOR TEST PURPOSE
         Random rnd = new Random();
         for (int row = 1; row <= 20; row++) {
             for (int col = 1; col <= 10; col++) {
                 int color = rnd.nextInt(8);
-                this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), col * 24, 20 + row * 24, null);
+                this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), col * 24, 25 + row * 24, null);
             }
         }
 
