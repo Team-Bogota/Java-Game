@@ -1,6 +1,8 @@
 package states;
 
 import display.Display;
+import game.*;
+import game.Shape;
 import gfx.ImageLoader;
 
 import java.awt.*;
@@ -29,7 +31,11 @@ public class GameState extends State {
 
     @Override
     public void tick() {
-
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -49,12 +55,21 @@ public class GameState extends State {
         Random rnd = new Random();
         for (int row = 1; row <= 20; row++) {
             for (int col = 1; col <= 10; col++) {
-                int color = rnd.nextInt(8);
-                this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), col * 24, 25 + row * 24, null);
+                this.graphics.drawImage(this.spsh.crop(0 * 24, 0, 24, 25), col * 24, 25 + row * 24, null);
             }
         }
 
-        this.graphics.setFont(statsFont);
+        Shape shape = new Shape();
+        for (int row = 0; row <= 3; row++) {
+            for (int col = 0; col <= 3; col++) {
+                int color = shape.getCoords()[row][col];
+                if (color != 0) {
+                    this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), 315 + col * 24, 100 + row * 24, null);
+                }
+            }
+        }
+
+        //this.graphics.setFont(statsFont);
         //this.graphics.drawString("12", 270, 254);
         //this.graphics.drawString("3698", 270, 304);
         //this.graphics.drawString("987", 270, 354);
