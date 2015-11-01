@@ -1,34 +1,25 @@
 package game;
 
-import display.Display;
-import gfx.ImageLoader;
+import states.GameState;
+import states.StateManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+// Removed the arguments from Game() and moved them directly into the GameState class, allowing change and manipulation only in the GameState class // AleksandarTanev
 public class Game implements Runnable {
-    private String title;
-    private int width, height;
 
     private Thread thread;
-
     private boolean isRunning;
 
-    private Display display;
-    private BufferStrategy bs;
-    private Graphics graphics;
-
-    private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
-
-    public Game(String title, int width, int height) {
-        this.title = title;
-        this.width = width;
-        this.height = height;
+    public Game() {
         this.isRunning = false;
     }
 
     private void init() {
-        this.display = new Display(title, width, height);
+
+        // Setting the starting state to be the GameState. The starting state in the future will be changed to MenuState() // AleksandarTanev
+        StateManager.setState(new GameState("Tetris", 456, 528));
     }
 
     private void tick() {
@@ -36,24 +27,11 @@ public class Game implements Runnable {
     }
 
     private void render() {
-        this.bs = this.display.getCanvas().getBufferStrategy();
 
-        if (this.bs == null) {
-            this.display.getCanvas().createBufferStrategy(2);
-            return;
-        }
+        // Running the tick() and render() of the current set state - at the moment we have only the GameState active // AleksandarTanev
+        StateManager.getState().tick();
+        StateManager.getState().render();
 
-        this.graphics = this.bs.getDrawGraphics();
-
-        this.graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 0, null);
-
-        this.graphics.setFont(statsFont);
-        //this.graphics.drawString("12", 270, 254);
-        //this.graphics.drawString("3698", 270, 304);
-        //this.graphics.drawString("987", 270, 354);
-
-        this.bs.show();
-        this.graphics.dispose();
     }
 
     @Override
