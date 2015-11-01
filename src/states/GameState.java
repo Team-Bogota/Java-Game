@@ -24,7 +24,7 @@ public class GameState extends State {
 
     public GameState(String title, int width, int height) {
 
-        this.display = new Display(title, width, height);
+        this.display = new Display("GameState", title, width, height);
         this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
     }
 

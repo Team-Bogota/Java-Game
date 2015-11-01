@@ -13,7 +13,7 @@ public class MenuState extends State {
     private Graphics graphics;
 
     public MenuState() {
-        this.display = new Display("Tetris", 456, 553);
+        this.display = new Display("MenuState", "Tetris", 456, 527);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MenuState extends State {
         }
         graphics = this.bs.getDrawGraphics();
 
-        graphics.drawImage(ImageLoader.loadImage("/images/mainmenu.png"), 0, 25, null);
+        graphics.drawImage(ImageLoader.loadImage("/images/mainmenu.png"), 0, 0, null);
 
 
         this.bs.show();
