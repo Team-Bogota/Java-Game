@@ -14,6 +14,7 @@ public class Config {
     public static String rotate = "Up", left = "Left", right = "Right", down = "Down", pause = "P";
     public static ArrayList<Choice> choices;
 
+    //create options frame, and add event to save changes after done button is cklicked
     public static void openConfig(JFrame frame) {
         choices = new ArrayList<>();
         JFrame options = new JFrame("Options");
@@ -42,6 +43,7 @@ public class Config {
         options.add(done);
     }
 
+    //take player choice and save
     public static void saveChanges() {
         Choice left = choices.get(0);
         Choice right = choices.get(1);
@@ -61,6 +63,7 @@ public class Config {
         }
     }
 
+
     public static Choice addChoice(String name, JFrame options, int x, int y) {
         JLabel label = new JLabel(name);
         label.setBounds(x, y - 20, 100, 20);
@@ -79,6 +82,7 @@ public class Config {
         ArrayList<String> result = new ArrayList<>();
         for (String s : KeyGetter.keyNames) {
             result.add(s);
+            //F24 is magic number :), just keys and avents after isnt needed
             if (s.equalsIgnoreCase("F24")) {
                 break;
 
@@ -87,6 +91,7 @@ public class Config {
         return result;
     }
 
+    //create text file to hold player config if dont exist or load saved keys if exist
     public static void loadConfig() throws IOException {
         File directory = new File(getDefaultDirectory(), "/Tetris");
         if (!directory.exists()) {
@@ -101,6 +106,7 @@ public class Config {
         }
         Scanner s = new Scanner(config);
         HashMap<String, String> values = new HashMap<>();
+        //read, split and put in hash map saved config
         while (s.hasNextLine()) {
             String[] entry = s.nextLine().split(":");
             String key = entry[0];
@@ -108,11 +114,13 @@ public class Config {
             values.put(key, value);
         }
 
+        //check readed info, we need 5 keys, if dont have load default config
         if (values.size() != 5) {
             saveConfig();
             return;
         }
 
+        //chek readed info, we need this values, if dont have load default config
         if (!values.containsKey("left")
                 || !values.containsKey("right")
                 || !values.containsKey("down")
@@ -128,6 +136,7 @@ public class Config {
         String rotate = values.get("rotate");
         String pause = values.get("pause");
 
+        //last check if hash map whit all possible keys hold loaded key names
         if (!getKeyNames().contains(left)
                 && !getKeyNames().contains(right)
                 && !getKeyNames().contains(down)
@@ -136,6 +145,7 @@ public class Config {
             return;
         }
 
+        //set game keys to saved
         Config.left = left;
         Config.right = right;
         Config.down = down;
@@ -143,6 +153,7 @@ public class Config {
         Config.pause = pause;
     }
 
+    //create file if dont exist and write current key config
     public static void saveConfig() throws IOException {
         File directory = new File(getDefaultDirectory(), "/Tetris");
         if (!directory.exists()) {
@@ -158,6 +169,7 @@ public class Config {
         pw.close();
     }
 
+    //take path to directory used for load and save for Windows, mac or other OS platform inipendent
     public static String getDefaultDirectory() {
         String OS = System.getProperty("os.name").toUpperCase();
         if (OS.contains("WIN")) {

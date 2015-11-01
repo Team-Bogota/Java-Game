@@ -23,6 +23,7 @@ public class InputHandler implements KeyListener {
     }
 
     @Override
+    //all checks are whit string compare - name of configured keys and name of used keys
     public void keyPressed(KeyEvent e) {
         if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
             left = true;

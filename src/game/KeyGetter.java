@@ -11,6 +11,7 @@ public class KeyGetter {
     public static HashMap<String, Integer> keys;
     public static ArrayList<String> keyNames;
 
+   //take all keys names and their integer values and save in hashmap, and additional save names in list
     public static void loadKeys() {
         keys = new HashMap<>();
         keyNames = new ArrayList<>();
