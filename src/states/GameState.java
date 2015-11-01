@@ -1,15 +1,13 @@
 package states;
 
 import display.Display;
-import game.*;
+import game.InputHandler;
 import game.Shape;
 import gfx.ImageLoader;
+import gfx.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
-
-import gfx.SpriteSheet;
 
 // This is the main state // AleksandarTanev
 public class GameState extends State {
@@ -18,6 +16,7 @@ public class GameState extends State {
     private BufferStrategy bs;
     private Graphics graphics;
     private SpriteSheet spsh;
+    private InputHandler inputHandler;
 
     private int[][] board;
 
@@ -35,7 +34,7 @@ public class GameState extends State {
 
         this.display = new Display("GameState", title, width, height);
         this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
-
+        this.inputHandler = new InputHandler(display);
         this.board = new int[20][10];
 
         this.currentShape = new Shape();

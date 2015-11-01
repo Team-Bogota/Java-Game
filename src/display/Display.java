@@ -54,7 +54,7 @@ public class Display extends Canvas{
 
         JMenuBar bar = new JMenuBar();
         bar.setBounds(0, 0, this.width, 25);
-        JMenu file = new JMenu("File");
+        JMenu file = new JMenu("Menu");
         file.setBounds(0, 0, 45, 24);
         bar.add(file);
 

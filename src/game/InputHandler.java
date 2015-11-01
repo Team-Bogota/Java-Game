@@ -26,6 +26,7 @@ public class InputHandler implements KeyListener {
     //all checks are whit string compare - name of configured keys and name of used keys
     public void keyPressed(KeyEvent e) {
         if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
+            System.out.println("left");
             left = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)) {
             right = true;
