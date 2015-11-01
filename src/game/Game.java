@@ -24,6 +24,7 @@ public class Game implements Runnable {
 
     private void tick() {
 
+
     }
 
     private void render() {
