@@ -19,6 +19,8 @@ public class GameState extends State {
     private Graphics graphics;
     private SpriteSheet spsh;
 
+    private int[][] board;
+
     private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
 
 
@@ -26,6 +28,8 @@ public class GameState extends State {
 
         this.display = new Display("GameState", title, width, height);
         this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
+
+        this.board = new int[20][10];
     }
 
 
@@ -52,20 +56,11 @@ public class GameState extends State {
         graphics.drawImage(ImageLoader.loadImage("/images/background.png"), 0, 25, null);
 
         // THIS IS SOME RANDOM BLOCKS PRINTING JUST FOR TEST PURPOSE
-        Random rnd = new Random();
-        for (int row = 1; row <= 20; row++) {
-            for (int col = 1; col <= 10; col++) {
-                this.graphics.drawImage(this.spsh.crop(0 * 24, 0, 24, 25), col * 24, 25 + row * 24, null);
-            }
-        }
 
-        Shape shape = new Shape();
-        for (int row = 0; row <= 3; row++) {
-            for (int col = 0; col <= 3; col++) {
-                int color = shape.getCoords()[row][col];
-                if (color != 0) {
-                    this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), 315 + col * 24, 100 + row * 24, null);
-                }
+        for (int row = 0; row < this.board.length; row++) {
+            for (int col = 0; col < this.board[row].length; col++) {
+                int color = this.board[row][col];
+                this.graphics.drawImage(this.spsh.crop(color * 24, 0, 24, 25), (1 + col) * 24, (2 + row) * 24, null);
             }
         }
 
