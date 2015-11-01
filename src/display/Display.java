@@ -17,15 +17,19 @@ public class Display extends Canvas{
 
     private Canvas canvas;
 
-    public Display(String title, int width, int height) {
+    public Display(String displayFrame, String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
 
-        this.createFrame();
+        if (displayFrame.equals("GameState")) {
+            this.createGameFrame();
+        } else if (displayFrame.equals("MenuState")) {
+            this.createMenuFrame();
+        }
     }
 
-    private void createFrame() {
+    private void createGameFrame() {
         Dimension dimensions = new Dimension(this.width, this.height);
 
         this.frame = new JFrame(this.title);
@@ -51,7 +55,7 @@ public class Display extends Canvas{
         JMenuBar bar = new JMenuBar();
         bar.setBounds(0, 0, this.width, 25);
         JMenu file = new JMenu("File");
-        file.setBounds(0,0,45,24);
+        file.setBounds(0, 0, 45, 24);
         bar.add(file);
 
         JMenuItem newGame = new JMenuItem("New Game");
@@ -95,6 +99,30 @@ public class Display extends Canvas{
         this.frame.add(bar);
         this.frame.add(this.canvas);
         this.frame.pack();
+    }
+
+
+    private void createMenuFrame() {
+        Dimension dimensions = new Dimension(this.width, this.height);
+
+        this.frame = new JFrame(this.title);
+        this.frame.setSize(this.width, this.height);
+        this.frame.setVisible(true);
+        this.frame.setFocusable(true);
+        this.frame.setResizable(false);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setLocationRelativeTo(null);
+        this.canvas = new Canvas();
+        this.canvas.setPreferredSize(dimensions);
+        this.canvas.setMaximumSize(dimensions);
+        this.canvas.setMinimumSize(dimensions);
+
+        // this.frame.add(bNewGame);
+        this.frame.add(this.canvas);
+
+
+        this.frame.pack();
+
     }
 
     public Canvas getCanvas() {
