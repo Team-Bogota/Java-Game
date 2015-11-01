@@ -6,6 +6,10 @@ import states.StateManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 // Removed the arguments from Game() and moved them directly into the GameState class, allowing change and manipulation only in the GameState class // AleksandarTanev
 public class Game implements Runnable {
@@ -66,5 +70,34 @@ public class Game implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void RemoveSolidLine(List<List<Integer>> matrix){
+
+        List<Integer> nullList = new ArrayList<>();
+
+        for (int i = 0; i < matrix.get(0).size(); i++) {
+            nullList.add(0);
+        }
+
+        for (int row = 0; row < matrix.size(); row++) {
+
+            boolean isLine = true;
+
+            for (int col = 0; col < matrix.get(row).size(); col++) {
+
+                if (matrix.get(row).get(col) == 0) {
+                    isLine = false;
+                }
+            }
+
+            if (isLine) {
+
+                matrix.remove(row);
+                matrix.add(0, nullList);
+            }
+
+        }
+
     }
 }
