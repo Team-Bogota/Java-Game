@@ -1,11 +1,19 @@
 package states;
 
+import display.Display;
+import gfx.ImageLoader;
+
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class MenuState extends State {
 
-    public MenuState() {
+    private Display display;
+    private BufferStrategy bs;
+    private Graphics graphics;
 
+    public MenuState() {
+        this.display = new Display("Tetris", 456, 553);
     }
 
     @Override
@@ -15,6 +23,18 @@ public class MenuState extends State {
 
     @Override
     public void render() {
+        this.bs = this.display.getCanvas().getBufferStrategy();
 
+        if (this.bs == null) {
+            this.display.getCanvas().createBufferStrategy(2);
+            return;
+        }
+        graphics = this.bs.getDrawGraphics();
+
+        graphics.drawImage(ImageLoader.loadImage("/images/mainmenu.png"), 0, 25, null);
+
+
+        this.bs.show();
+        graphics.dispose();
     }
 }
