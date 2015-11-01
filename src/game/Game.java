@@ -74,6 +74,8 @@ public class Game implements Runnable {
 
     public void RemoveSolidLine(List<List<Integer>> matrix){
 
+        //Removes the solid row and adds empty row to the top
+
         List<Integer> nullList = new ArrayList<>();
 
         for (int i = 0; i < matrix.get(0).size(); i++) {
