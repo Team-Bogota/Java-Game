@@ -96,7 +96,7 @@ public class GameState extends State {
         }
         //check for rotate
         if (inputHandler.rotate) {
-            currentShape.rotateLeft();
+            currentShape.rotateClockwise();
         }
 
         ticks++;

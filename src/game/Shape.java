@@ -51,25 +51,18 @@ public class Shape {
         this.y = y;
     }
 
-    public void rotateLeft() {
+    public void rotateClockwise() {
         int[][] rotatedCoords = new int[coords.length][coords[0].length];
         for (int row = 0; row < coords.length; row++) {
+            int previosRow = coords.length - 1;
             for (int col = 0; col < coords[0].length; col++) {
-                rotatedCoords[col][row] = this.coords[row][col];
+                rotatedCoords[row][col] = this.coords[previosRow][row];
+                previosRow--;
             }
         }
         coords = rotatedCoords;
     }
 
-    public void rotateRight() {
-        int[][] rotatedCoords = new int[coords.length][coords[0].length];
-        for (int row = 0; row < coords.length; row++) {
-            for (int col = 0; col < coords[0].length; col++) {
-                rotatedCoords[col][coords.length - 1 - row] = this.coords[row][col];
-            }
-        }
-        coords = rotatedCoords;
-    }
 
     private Tetrominoes getRandomShape() {
         Random rnd = new Random();
