@@ -1,15 +1,14 @@
 package display;
 
 import game.Config;
+import game.InputHandler;
 import game.KeyGetter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Display extends Canvas{
+public class Display extends Canvas {
     private String title;
     private int width, height;
 
@@ -54,18 +53,20 @@ public class Display extends Canvas{
 
         JMenuBar bar = new JMenuBar();
         bar.setBounds(0, 0, this.width, 25);
-        JMenu file = new JMenu("Menu");
-        file.setBounds(0, 0, 45, 24);
-        bar.add(file);
+        JMenu menu = new JMenu("Menu");
+        menu.setBounds(0, 0, 45, 24);
+        bar.add(menu);
 
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.addActionListener((e -> {
+            InputHandler.pause = true;
             System.out.println("Starting new game..");
             //TODO : logic to start new game;
         }));
 
         JMenuItem highScore = new JMenuItem("Highscore");
         highScore.addActionListener((e -> {
+            InputHandler.pause = true;
             //TODO : logic to display highscore;
             int testHighScore = 0;
             JFrame alert = new JFrame("High Score");
@@ -77,25 +78,32 @@ public class Display extends Canvas{
             alert.setResizable(false);
 
             JLabel score = new JLabel("The highscore is: " + testHighScore);
-            score.setBounds(0,0,200,50);
+            score.setBounds(0, 0, 200, 50);
 
             JButton okayButton = new JButton("Okay");
-            okayButton.setBounds(50,80,100,30);
+            okayButton.setBounds(50, 80, 100, 30);
             okayButton.addActionListener(e1 -> alert.dispose());
             alert.add(score);
             alert.add(okayButton);
         }));
 
         JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener((e -> System.exit(0)));
+        exit.addActionListener((e -> {
+            InputHandler.pause = true;
+            System.exit(0);
+        }));
 
         JMenuItem options = new JMenuItem("Options");
-        options.addActionListener(e -> Config.openConfig(frame));
+        options.addActionListener(e -> {
+            InputHandler.pause = true;
+            Config.openConfig(frame);
 
-        file.add(newGame);
-        file.add(highScore);
-        file.add(options);
-        file.add(exit);
+        });
+
+        menu.add(newGame);
+        menu.add(highScore);
+        menu.add(options);
+        menu.add(exit);
         this.frame.add(bar);
         this.frame.add(this.canvas);
         this.frame.pack();
