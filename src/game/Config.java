@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Config {
 
-    public static String rotate = "Up", left = "Left", right = "Right", down = "Down", pause = "P";
+    public static String rotate = "Up", left = "Left", right = "Right", down = "Down", pause = "P", instantDown = "Space";
     public static ArrayList<Choice> choices;
 
     //create options frame, and add event to save changes after done button is cklicked
@@ -33,6 +33,8 @@ public class Config {
         down.select(Config.down);
         Choice pause = addChoice("Pause", options, 30, 130);
         pause.select(Config.pause);
+        Choice instantDown = addChoice("InstantDown", options, 150, 130);
+        instantDown.select(Config.instantDown);
 
         JButton done = new JButton("Done");
         done.setBounds(150, 220, 100, 30);
@@ -50,12 +52,14 @@ public class Config {
         Choice rotate = choices.get(2);
         Choice down = choices.get(3);
         Choice pause = choices.get(4);
+        Choice instantDown = choices.get(5);
 
         Config.left = left.getSelectedItem();
         Config.right = right.getSelectedItem();
         Config.down = down.getSelectedItem();
         Config.rotate = rotate.getSelectedItem();
         Config.pause = pause.getSelectedItem();
+        Config.instantDown = instantDown.getSelectedItem();
         try {
             saveConfig();
         } catch (IOException e) {
@@ -115,7 +119,7 @@ public class Config {
         }
 
         //check readed info, we need 5 keys, if dont have load default config
-        if (values.size() != 5) {
+        if (values.size() != 6) {
             saveConfig();
             return;
         }
@@ -125,7 +129,8 @@ public class Config {
                 || !values.containsKey("right")
                 || !values.containsKey("down")
                 || !values.containsKey("rotate")
-                || !values.containsKey("pause")) {
+                || !values.containsKey("pause")
+                || !values.containsKey("instantDown")) {
             saveConfig();
             return;
         }
@@ -135,13 +140,15 @@ public class Config {
         String down = values.get("down");
         String rotate = values.get("rotate");
         String pause = values.get("pause");
+        String instantDown = values.get("instantDown");
 
         //last check if hash map whit all possible keys hold loaded key names
         if (!getKeyNames().contains(left)
                 && !getKeyNames().contains(right)
                 && !getKeyNames().contains(down)
                 && !getKeyNames().contains(rotate)
-                && !getKeyNames().contains(pause)) {
+                && !getKeyNames().contains(pause)
+                && !getKeyNames().contains(instantDown)) {
             return;
         }
 
@@ -151,6 +158,7 @@ public class Config {
         Config.down = down;
         Config.rotate = rotate;
         Config.pause = pause;
+        Config.instantDown = instantDown;
     }
 
     //create file if dont exist and write current key config
@@ -166,6 +174,7 @@ public class Config {
         pw.println("down:" + down);
         pw.println("rotate:" + rotate);
         pw.println("pause:" + pause);
+        pw.println("instantDown:" + instantDown);
         pw.close();
     }
 
