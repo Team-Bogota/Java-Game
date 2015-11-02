@@ -129,6 +129,12 @@ public class GameState extends State {
             inputHandler.rotate = false;
         }
 
+        if (inputHandler.instantDown){
+            while (canMove(currentShape, 0, 1)){
+                currentShape.setY(currentShape.getY() + 1);
+            }
+            inputHandler.instantDown = false;
+        }
 
         ticks++;
     }
