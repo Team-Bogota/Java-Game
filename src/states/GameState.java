@@ -18,29 +18,26 @@ public class GameState extends State {
     private SpriteSheet spsh;
     private InputHandler inputHandler;
 
-    private int score = 0;
-    private int lines = 0;
-    private int level = 1;
+    private int score;
+    private int lines;
+    private int level;
     private int[][] board;
 
     private Shape currentShape;
     private Shape nextShape;
 
-    private int ticks = 0;
-    private int speed = 15;
+    private int ticks;
+    private int speed;
 
     public GameState(String title, int width, int height) {
 
         this.display = new Display("GameState", title, width, height);
-        this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
-        this.inputHandler = new InputHandler(display);
-        this.board = new int[20][10];
 
-        this.currentShape = new Shape();
-        this.nextShape = new Shape();
+        init();
     }
 
-    private void reset() {
+    //initialize all fields in this method and use it when start new game
+    private void init() {
         this.score = 0;
         this.lines = 0;
         this.level = 1;
@@ -58,7 +55,7 @@ public class GameState extends State {
     public void tick() {
 
         if (display.newGame) {
-            reset();
+            init();
         }
 
         //update speed
