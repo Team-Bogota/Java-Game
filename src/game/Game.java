@@ -35,7 +35,9 @@ public class Game implements Runnable {
     }
 
     private void tick() {
-        StateManager.getState().tick();
+        if (!InputHandler.pause) {
+            StateManager.getState().tick();
+        }
     }
 
     private void render() {
