@@ -47,8 +47,8 @@ public class Config {
     public static void saveChanges() {
         Choice left = choices.get(0);
         Choice right = choices.get(1);
-        Choice down = choices.get(2);
-        Choice rotate = choices.get(3);
+        Choice rotate = choices.get(2);
+        Choice down = choices.get(3);
         Choice pause = choices.get(4);
 
         Config.left = left.getSelectedItem();
