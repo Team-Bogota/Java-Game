@@ -31,11 +31,6 @@ public class GameState extends State {
 
     private int ticks = 0;
     private int speed = 15;
-    double fps = 10;
-    double timePerTick = 1_000_000_000 / fps;
-    double delta = 0;
-    long now;
-    long lastTime = System.nanoTime();
 
     public GameState(String title, int width, int height) {
 
@@ -78,7 +73,7 @@ public class GameState extends State {
                     }
                 }
                 this.score +=2;
-                RemoveSolidLine();
+
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
             }
@@ -86,26 +81,13 @@ public class GameState extends State {
             ticks = 0;
         }
 
-        now = System.nanoTime();
-        delta += (now - lastTime) / timePerTick;
-        lastTime = now;
-
-        if (delta >= 1) {
-            processMoveComands();
-            delta = 0;
-        }
-
-
-        ticks++;
-    }
-
-    private void processMoveComands() {
         //check for move to left
         if (inputHandler.left) {
 
             if (canMove(currentShape, -1, 0)) {
                 currentShape.setX(currentShape.getX() - 1);
             }
+            inputHandler.left = false;
         }
         //check for move to right
         if (inputHandler.right) {
@@ -113,6 +95,7 @@ public class GameState extends State {
             if (canMove(currentShape, 1, 0)) {
                 currentShape.setX(currentShape.getX() + 1);
             }
+            inputHandler.right = false;
         }
         //check for move down
         if (inputHandler.down) {
@@ -120,11 +103,16 @@ public class GameState extends State {
             if (canMove(currentShape, 0, 1)) {
                 currentShape.setY(currentShape.getY() + 1);
             }
+            inputHandler.down = false;
         }
         //check for rotate
         if (inputHandler.rotate) {
             currentShape.rotateClockwise();
+            inputHandler.rotate = false;
         }
+
+        RemoveSolidLine();
+        ticks++;
     }
 
     @Override
@@ -168,14 +156,13 @@ public class GameState extends State {
 
         //Print Score, Lines and Level
         this.graphics.setFont(new Font("/fonts/BRADHITC.TTF", Font.BOLD, 20));
-        this.graphics.drawString(String.format("%d",this.level), 350, 330);
-        this.graphics.drawString(String.format("%d",this.lines), 350, 390);
-        this.graphics.drawString(String.format("%d",this.score), 340, 450);
-
-        //this.graphics.setFont(statsFont);
-        //this.graphics.drawString("12", 270, 254);
-        //this.graphics.drawString("3698", 270, 304);
-        //this.graphics.drawString("987", 270, 354);
+        int fontWidth = 8;
+        String lv = String.format("%d", this.level);
+        String ln = String.format("%d", this.lines);
+        String sc = String.format("%d", this.score);
+        this.graphics.drawString(lv, 350 - (lv.length() - 1) * fontWidth, 330);
+        this.graphics.drawString(ln, 350 - (ln.length() - 1) * fontWidth, 390);
+        this.graphics.drawString(sc, 350 - (sc.length() - 1) * fontWidth, 450);
 
         this.bs.show();
         graphics.dispose();
