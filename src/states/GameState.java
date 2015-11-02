@@ -46,28 +46,12 @@ public class GameState extends State {
         //check if element has reached bottom of the board or another element
         if (ticks >= speed) {
 
-            int shapeX = currentShape.getX();
-            int shapeY = currentShape.getY();
-            boolean isFreeToFall = true;
-
-            for (int row = 0; row < currentShape.getCoords().length; row++) {
-                for (int col = 0; col < currentShape.getCoords()[row].length; col++) {
-
-                    int blockColor = currentShape.getCoords()[row][col];
-                    int blockX = shapeX + col;
-                    int blockY = shapeY + row;
-
-                    if (blockColor != 0 && blockY + 1 >= board.length) {
-                        isFreeToFall = false;
-                    } else if (blockColor != 0 && blockY + 1 >= 0 && board[blockY + 1][blockX] != 0) {
-                        isFreeToFall = false;
-                    }
-                }
-            }
-
-            if (isFreeToFall) {
+            if (canMove(currentShape, 0, 1)) {
                 currentShape.setY(currentShape.getY() + 1);
+
             } else {
+                int shapeX = currentShape.getX();
+                int shapeY = currentShape.getY();
 
                 for (int row = 0; row < currentShape.getCoords().length; row++) {
                     for (int col = 0; col < currentShape.getCoords()[row].length; col++) {
@@ -88,11 +72,24 @@ public class GameState extends State {
 
         //check for move to left
         if (inputHandler.left) {
-            currentShape.setX(currentShape.getX() - 1);
+
+            if (canMove(currentShape, -1, 0)) {
+                currentShape.setX(currentShape.getX() - 1);
+            }
         }
         //check for move to right
         if (inputHandler.right) {
-            currentShape.setX(currentShape.getX() + 1);
+
+            if (canMove(currentShape, 1, 0)) {
+                currentShape.setX(currentShape.getX() + 1);
+            }
+        }
+        //check for move down
+        if (inputHandler.down) {
+
+            if (canMove(currentShape, 0, 1)) {
+                currentShape.setY(currentShape.getY() + 1);
+            }
         }
         //check for rotate
         if (inputHandler.rotate) {
@@ -148,5 +145,28 @@ public class GameState extends State {
 
         this.bs.show();
         graphics.dispose();
+    }
+
+    private boolean canMove(Shape shape, int deltaX, int deltaY) {
+
+        int shapeX = shape.getX();
+        int shapeY = shape.getY();
+
+        for (int row = 0; row < shape.getCoords().length; row++) {
+            for (int col = 0; col < shape.getCoords()[row].length; col++) {
+
+                int blockColor = shape.getCoords()[row][col];
+                int blockX = shapeX + col;
+                int blockY = shapeY + row;
+
+                if (blockColor != 0 && (blockY + deltaY >= this.board.length || blockX + deltaX < 0 || blockX + deltaX >= this.board[blockY].length)) {
+                    return false;
+                } else if (blockColor != 0 && blockY + deltaY >= 0 && this.board[blockY + deltaY][blockX + deltaX] != 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
