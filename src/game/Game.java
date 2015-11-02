@@ -14,14 +14,13 @@ import java.util.List;
 // Removed the arguments from Game() and moved them directly into the GameState class, allowing change and manipulation only in the GameState class // AleksandarTanev
 public class Game implements Runnable {
 
-    private Thread thread;
-    private boolean isRunning;
-
     double fps = 30;
     double timePerTick = 1_000_000_000 / fps;
     double delta = 0;
     long now;
     long lastTime = System.nanoTime();
+    private Thread thread;
+    private boolean isRunning;
 
     public Game() {
         this.isRunning = false;
@@ -30,8 +29,8 @@ public class Game implements Runnable {
     private void init() {
 
         //--->>Setting the starting state to be the GameState. The starting state in the future will be changed to MenuState() // AleksandarTanev
-        StateManager.setState(new GameState("Tetris", 456, 553));
-        //StateManager.setState(new MenuState());
+        //StateManager.setState(new GameState("Tetris", 456, 553));
+        StateManager.setState(new MenuState());
     }
 
     private void tick() {

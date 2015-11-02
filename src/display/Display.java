@@ -140,6 +140,47 @@ public class Display extends Canvas {
     private void createMenuFrame() {
         Dimension dimensions = new Dimension(this.width, this.height);
 
+
+        JButton bNewGame = new JButton();
+        bNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_NewGame.png")));
+        bNewGame.setBorderPainted(true);
+        bNewGame.setBounds(79, 237, 305, 38);
+        // bNewGame.setBorder(null);
+        bNewGame.setOpaque(false);
+        bNewGame.setContentAreaFilled(false);
+
+        JButton bLoadSavedGame = new JButton();
+        bLoadSavedGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_LoadSavedGame.png")));
+        bLoadSavedGame.setBorderPainted(true);
+        bLoadSavedGame.setBounds(79, 275, 305, 38);
+        // bLoadSavedGame.setBorder(null);
+        bLoadSavedGame.setOpaque(false);
+        bLoadSavedGame.setContentAreaFilled(false);
+
+        JButton bHighScores = new JButton();
+        bHighScores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_HighScore.png")));
+        bHighScores.setBorderPainted(true);
+        bHighScores.setBounds(79, 313, 305, 38);
+        // bHighScores.setBorder(null);
+        bHighScores.setOpaque(false);
+        bHighScores.setContentAreaFilled(false);
+
+        JButton bAbout = new JButton();
+        bAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_About.png")));
+        bAbout.setBorderPainted(true);
+        bAbout.setBounds(79, 351, 305, 38);
+        // bAbout.setBorder(null);
+        bAbout.setOpaque(false);
+        bAbout.setContentAreaFilled(false);
+
+        JButton bExit = new JButton();
+        bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_Exit.png")));
+        bExit.setBorderPainted(true);
+        bExit.setBounds(79, 389, 305, 38);
+        // bExit.setBorder(null);
+        bExit.setOpaque(false);
+        bExit.setContentAreaFilled(false);
+
         this.frame = new JFrame(this.title);
         this.frame.setSize(this.width, this.height);
         this.frame.setVisible(true);
@@ -152,11 +193,16 @@ public class Display extends Canvas {
         this.canvas.setMaximumSize(dimensions);
         this.canvas.setMinimumSize(dimensions);
 
-        // this.frame.add(bNewGame);
+        this.frame.add(bNewGame);
+        this.frame.add(bLoadSavedGame);
+        this.frame.add(bHighScores);
+        this.frame.add(bAbout);
+        this.frame.add(bExit);
         this.frame.add(this.canvas);
 
 
         this.frame.pack();
+
 
     }
 
