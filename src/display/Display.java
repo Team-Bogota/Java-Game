@@ -1,6 +1,7 @@
 package display;
 
 import game.Config;
+import game.Game;
 import game.InputHandler;
 import game.KeyGetter;
 
@@ -15,6 +16,8 @@ public class Display extends Canvas {
     private JFrame frame;
 
     private Canvas canvas;
+
+    public JMenuItem newGame;
 
     public Display(String displayFrame, String title, int width, int height) {
         this.title = title;
@@ -57,12 +60,7 @@ public class Display extends Canvas {
         menu.setBounds(0, 0, 45, 24);
         bar.add(menu);
 
-        JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener((e -> {
-            InputHandler.pause = true;
-            System.out.println("Starting new game..");
-            //TODO : logic to start new game;
-        }));
+        newGame = new JMenuItem("New Game");
 
         JMenuItem highScore = new JMenuItem("Highscore");
         highScore.addActionListener((e -> {

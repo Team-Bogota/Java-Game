@@ -1,16 +1,13 @@
 package states;
 
 import display.Display;
-import game.Game;
 import game.InputHandler;
 import game.Shape;
 import gfx.ImageLoader;
 import gfx.SpriteSheet;
 
 import java.awt.*;
-import java.awt.List;
 import java.awt.image.BufferStrategy;
-import java.util.*;
 
 // This is the main state // AleksandarTanev
 public class GameState extends State {
@@ -31,6 +28,7 @@ public class GameState extends State {
 
     private int ticks = 0;
     private int speed = 15;
+    private boolean newGame;
 
     public GameState(String title, int width, int height) {
 
@@ -41,12 +39,32 @@ public class GameState extends State {
 
         this.currentShape = new Shape();
         this.nextShape = new Shape();
+        this.newGame = false;
     }
 
+    private void reset() {
+        this.score = 0;
+        this.lines = 0;
+        this.level = 1;
+        this.ticks = 0;
+        this.speed = 15;
+        this.spsh = new SpriteSheet(ImageLoader.loadImage("/images/blocks.png"));
+        this.inputHandler = new InputHandler(display);
+        this.board = new int[20][10];
+        this.currentShape = new Shape();
+        this.nextShape = new Shape();
+        this.newGame = false;
+    }
 
     @Override
     public void tick() {
 
+        display.newGame.addActionListener((e -> {
+            this.newGame = true;
+        }));
+        if (newGame) {
+            reset();
+        }
         //here goes shape moves logic
 
         //update speed
@@ -72,7 +90,7 @@ public class GameState extends State {
                         }
                     }
                 }
-                this.score +=2;
+                this.score += 2;
                 RemoveSolidLine();
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
@@ -110,7 +128,7 @@ public class GameState extends State {
             currentShape.rotateClockwise();
             inputHandler.rotate = false;
         }
-      
+
 
         ticks++;
     }
@@ -156,9 +174,9 @@ public class GameState extends State {
 
         //Print Score, Lines and Level
         this.graphics.setFont(new Font("/fonts/BRADHITC.TTF", Font.BOLD, 20));
-        this.graphics.drawString(String.format("%d",this.level), 350, 330);
-        this.graphics.drawString(String.format("%d",this.lines), 350, 390);
-        this.graphics.drawString(String.format("%d",this.score), 340, 450);
+        this.graphics.drawString(String.format("%d", this.level), 350, 330);
+        this.graphics.drawString(String.format("%d", this.lines), 350, 390);
+        this.graphics.drawString(String.format("%d", this.score), 340, 450);
 
         //this.graphics.setFont(statsFont);
         //this.graphics.drawString("12", 270, 254);
@@ -242,13 +260,17 @@ public class GameState extends State {
                 }
 
                 switch (counter) {
-                    case 1: score += 100;
+                    case 1:
+                        score += 100;
                         break;
-                    case 2: score += 300;
+                    case 2:
+                        score += 300;
                         break;
-                    case 3: score += 700;
+                    case 3:
+                        score += 700;
                         break;
-                    case 4: score += 1100;
+                    case 4:
+                        score += 1100;
                         break;
                     default:
                         break;
