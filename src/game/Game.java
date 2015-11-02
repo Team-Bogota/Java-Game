@@ -17,6 +17,12 @@ public class Game implements Runnable {
     private Thread thread;
     private boolean isRunning;
 
+    double fps = 30;
+    double timePerTick = 1_000_000_000 / fps;
+    double delta = 0;
+    long now;
+    long lastTime = System.nanoTime();
+
     public Game() {
         this.isRunning = false;
     }
@@ -29,16 +35,14 @@ public class Game implements Runnable {
     }
 
     private void tick() {
-
-
+        StateManager.getState().tick();
     }
 
     private void render() {
 
         // Running the tick() and render() of the current set state - at the moment we have only the GameState active // AleksandarTanev
-        StateManager.getState().tick();
-        StateManager.getState().render();
 
+        StateManager.getState().render();
     }
 
     @Override
@@ -46,8 +50,15 @@ public class Game implements Runnable {
         this.init();
 
         while (isRunning) {
-            this.tick();
-            this.render();
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+            lastTime = now;
+
+            if (delta >= 1) {
+                this.tick();
+                this.render();
+                delta = 0;
+            }
         }
 
         this.stop();

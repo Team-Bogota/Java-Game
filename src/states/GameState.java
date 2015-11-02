@@ -23,12 +23,8 @@ public class GameState extends State {
     private Shape currentShape;
     private Shape nextShape;
 
-    private int x;
-    private int y;
-
-
-    private Font statsFont = new Font("Monospaced", Font.BOLD | Font.ITALIC, 22);
-
+    private long ticks = 0;
+    int level = 15;
 
     public GameState(String title, int width, int height) {
 
@@ -44,16 +40,48 @@ public class GameState extends State {
 
     @Override
     public void tick() {
-        try {
+        ticks++;
+
+
+        if (ticks >= level) {
             currentShape.setY(currentShape.getY() + 1);
             if (currentShape.getY() > 18) {
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
             }
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            ticks = 0;
         }
+
+        if (inputHandler.left) {
+            currentShape.setX(currentShape.getX() - 1);
+        } else if (inputHandler.right) {
+            currentShape.setX(currentShape.getX() + 1);
+        }
+        if (inputHandler.rotate) {
+            currentShape.rotateRight();
+        }
+
+        //here goes shape moves logic
+
+//        try {
+//            if (inputHandler.left) {
+//                currentShape.setX(currentShape.getX() - 1);
+//            } else if (inputHandler.right){
+//                currentShape.setX(currentShape.getX() + 1);
+//            }
+//            if (inputHandler.rotate) {
+//                currentShape.rotateRight();
+//            }
+//            currentShape.setY(currentShape.getY() + 1);
+//            if (currentShape.getY() > 18) {
+//                this.currentShape = this.nextShape;
+//                this.nextShape = new Shape();
+//            }
+//            Thread.sleep(400);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     @Override

@@ -83,10 +83,10 @@ public class Shape {
         switch (shape) {
             case IShape:
                 this.coords = new int[][]{
-                        {0, color, 0},
-                        {0, color, 0},
-                        {0, color, 0},
-                        {0, color, 0},
+                        {0, color, 0, 0},
+                        {0, color, 0, 0},
+                        {0, color, 0, 0},
+                        {0, color, 0, 0},
                 };
                 break;
             case OShape:
