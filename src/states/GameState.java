@@ -21,6 +21,9 @@ public class GameState extends State {
     private SpriteSheet spsh;
     private InputHandler inputHandler;
 
+    private int score = 0;
+    private int lines = 0;
+    private int level = 1;
     private int[][] board;
 
     private Shape currentShape;
@@ -66,6 +69,7 @@ public class GameState extends State {
                         }
                     }
                 }
+                this.score +=2;
                 RemoveSolidLine();
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
@@ -147,6 +151,12 @@ public class GameState extends State {
             }
         }
 
+        //Print Score, Lines and Level
+        this.graphics.setFont(new Font("/fonts/BRADHITC.TTF", Font.BOLD, 20));
+        this.graphics.drawString(String.format("%d",this.level), 350, 330);
+        this.graphics.drawString(String.format("%d",this.lines), 350, 390);
+        this.graphics.drawString(String.format("%d",this.score), 340, 450);
+
         //this.graphics.setFont(statsFont);
         //this.graphics.drawString("12", 270, 254);
         //this.graphics.drawString("3698", 270, 304);
@@ -184,6 +194,7 @@ public class GameState extends State {
 
 
         int[] nullRow = new int[this.board[0].length];
+        int counter = 0;
 
         for (int i = 0; i < nullRow.length; i++) {
             nullRow[i] = 0;
@@ -204,6 +215,11 @@ public class GameState extends State {
             if (isLine) {
                 //make the full row null
                 this.board[row] = nullRow;
+                //update Score, Lines and Level
+                counter++;
+                this.lines++;
+                this.level = (lines / 10) + 1;
+
 
                 int exchangedRow = row;
                 // exchange rows
@@ -216,6 +232,19 @@ public class GameState extends State {
                     if (exchangedRow < 0) {
                         break;
                     }
+                }
+
+                switch (counter) {
+                    case 1: score += 100;
+                        break;
+                    case 2: score += 300;
+                        break;
+                    case 3: score += 700;
+                        break;
+                    case 4: score += 1100;
+                        break;
+                    default:
+                        break;
                 }
 
             }
