@@ -25,8 +25,7 @@ public class InputHandler implements KeyListener {
     @Override
     //all checks are whit string compare - name of configured keys and name of used keys
     public void keyPressed(KeyEvent e) {
-        if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
-            System.out.println("left");
+       /* if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
             left = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)) {
             right = true;
@@ -36,21 +35,21 @@ public class InputHandler implements KeyListener {
             rotate = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)) {
             pause = true;
-        }
+        }*/
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
-            left = false;
+            left = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)) {
-            right = false;
+            right = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)) {
-            down = false;
+            down = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.rotate)) {
-            rotate = false;
+            rotate = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)) {
-            pause = false;
+            pause = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 package states;
 
 import display.Display;
+import game.Game;
 import game.InputHandler;
 import game.Shape;
 import gfx.ImageLoader;
@@ -79,6 +80,7 @@ public class GameState extends State {
             if (canMove(currentShape, -1, 0)) {
                 currentShape.setX(currentShape.getX() - 1);
             }
+            inputHandler.left = false;
         }
         //check for move to right
         if (inputHandler.right) {
@@ -86,6 +88,7 @@ public class GameState extends State {
             if (canMove(currentShape, 1, 0)) {
                 currentShape.setX(currentShape.getX() + 1);
             }
+            inputHandler.right = false;
         }
         //check for move down
         if (inputHandler.down) {
@@ -93,11 +96,14 @@ public class GameState extends State {
             if (canMove(currentShape, 0, 1)) {
                 currentShape.setY(currentShape.getY() + 1);
             }
+            inputHandler.down = false;
         }
         //check for rotate
         if (inputHandler.rotate) {
             currentShape.rotateClockwise();
+            inputHandler.rotate = false;
         }
+      
 
         ticks++;
     }
