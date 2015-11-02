@@ -3,9 +3,14 @@ package display;
 import game.Config;
 import game.InputHandler;
 import game.KeyGetter;
+import states.GameState;
+import states.StateManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class Display extends Canvas {
@@ -140,6 +145,20 @@ public class Display extends Canvas {
     private void createMenuFrame() {
         Dimension dimensions = new Dimension(this.width, this.height);
 
+        this.frame = new JFrame(this.title);
+        this.frame.setSize(this.width, this.height);
+        this.frame.setVisible(true);
+        this.frame.setFocusable(true);
+        this.frame.setResizable(false);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setLocationRelativeTo(null);
+        this.canvas = new Canvas();
+        this.canvas.setPreferredSize(dimensions);
+        this.canvas.setMaximumSize(dimensions);
+        this.canvas.setMinimumSize(dimensions);
+
+
+
         // ---- Creating buttons for the main Menu
 
         JButton bNewGame = new JButton();
@@ -156,6 +175,13 @@ public class Display extends Canvas {
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 bNewGame.setBorder(null);
+            }
+        });
+        bNewGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hideFrame();
+                StateManager.setState(new GameState("Tetris", 456, 553));
             }
         });
 
@@ -230,18 +256,6 @@ public class Display extends Canvas {
         // ----
 
 
-        this.frame = new JFrame(this.title);
-        this.frame.setSize(this.width, this.height);
-        this.frame.setVisible(true);
-        this.frame.setFocusable(true);
-        this.frame.setResizable(false);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setLocationRelativeTo(null);
-        this.canvas = new Canvas();
-        this.canvas.setPreferredSize(dimensions);
-        this.canvas.setMaximumSize(dimensions);
-        this.canvas.setMinimumSize(dimensions);
-
         // ---- Adding buttons
         this.frame.add(bNewGame);
         this.frame.add(bLoadSavedGame);
@@ -256,6 +270,10 @@ public class Display extends Canvas {
         this.frame.pack();
 
 
+    }
+
+    public void hideFrame() {
+        this.frame.setVisible(false);
     }
 
     public Canvas getCanvas() {
