@@ -252,7 +252,12 @@ public class Display extends Canvas {
                 bExit.setBorder(null);
             }
         });
-
+        bExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         // ----
 
 
