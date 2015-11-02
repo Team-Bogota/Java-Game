@@ -49,6 +49,9 @@ public class GameState extends State {
 
         //here goes shape moves logic
 
+        //update speed
+        this.speed = 15 - this.level;
+
         //check if element has reached bottom of the board or another element
         if (ticks >= speed) {
 
@@ -219,6 +222,10 @@ public class GameState extends State {
                 counter++;
                 this.lines++;
                 this.level = (lines / 10) + 1;
+
+                if (this.level > 10){
+                    this.level = 10;
+                }
 
 
                 int exchangedRow = row;
