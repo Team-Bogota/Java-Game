@@ -11,7 +11,7 @@ public class InputHandler implements KeyListener {
     public boolean right;
     public boolean rotate;
     public boolean down;
-    public boolean pause;
+    public static boolean pause = false;
 
     public InputHandler(Display display) {
         display.getCanvas().addKeyListener(this);
@@ -49,7 +49,7 @@ public class InputHandler implements KeyListener {
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.rotate)) {
             rotate = true;
         } else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)) {
-            pause = true;
+            pause = !pause;
         }
     }
 }
