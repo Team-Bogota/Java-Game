@@ -83,34 +83,5 @@ public class Game implements Runnable {
         }
     }
 
-    public void RemoveSolidLine(List<List<Integer>> matrix) {
 
-        //Removes the solid row and adds empty row to the top
-
-        List<Integer> nullList = new ArrayList<>();
-
-        for (int i = 0; i < matrix.get(0).size(); i++) {
-            nullList.add(0);
-        }
-
-        for (int row = 0; row < matrix.size(); row++) {
-
-            boolean isLine = true;
-
-            for (int col = 0; col < matrix.get(row).size(); col++) {
-
-                if (matrix.get(row).get(col) == 0) {
-                    isLine = false;
-                }
-            }
-
-            if (isLine) {
-
-                matrix.remove(row);
-                matrix.add(0, nullList);
-            }
-
-        }
-
-    }
 }

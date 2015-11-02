@@ -7,7 +7,9 @@ import gfx.ImageLoader;
 import gfx.SpriteSheet;
 
 import java.awt.*;
+import java.awt.List;
 import java.awt.image.BufferStrategy;
+import java.util.*;
 
 // This is the main state // AleksandarTanev
 public class GameState extends State {
@@ -63,6 +65,7 @@ public class GameState extends State {
                         }
                     }
                 }
+                RemoveSolidLine();
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
             }
@@ -168,5 +171,50 @@ public class GameState extends State {
         }
 
         return true;
+    }
+
+    //fills the solid row with 0 and shifts it to the top
+    public void RemoveSolidLine() {
+
+
+        int[] nullRow = new int[this.board[0].length];
+
+        for (int i = 0; i < nullRow.length; i++) {
+            nullRow[i] = 0;
+        }
+
+        for (int row = 0; row < this.board.length; row++) {
+
+            boolean isLine = true;
+
+            for (int col = this.board[row].length - 1; col >= 0; col--) {
+
+                if (this.board[row][col] == 0) {
+                    isLine = false;
+                    break;
+                }
+            }
+
+            if (isLine) {
+                //make the full row null
+                this.board[row] = nullRow;
+
+                int exchangedRow = row;
+                // exchange rows
+                for (int innerRow = row - 1; innerRow >= 0; innerRow--) {
+
+                    this.board[exchangedRow] = this.board[innerRow];
+                    this.board[innerRow] = nullRow;
+
+                    exchangedRow--;
+                    if (exchangedRow < 0) {
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
     }
 }
