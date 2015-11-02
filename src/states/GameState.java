@@ -73,7 +73,7 @@ public class GameState extends State {
                     }
                 }
                 this.score +=2;
-
+                RemoveSolidLine();
                 this.currentShape = this.nextShape;
                 this.nextShape = new Shape();
             }
@@ -110,8 +110,8 @@ public class GameState extends State {
             currentShape.rotateClockwise();
             inputHandler.rotate = false;
         }
+      
 
-        RemoveSolidLine();
         ticks++;
     }
 
@@ -156,13 +156,14 @@ public class GameState extends State {
 
         //Print Score, Lines and Level
         this.graphics.setFont(new Font("/fonts/BRADHITC.TTF", Font.BOLD, 20));
-        int fontWidth = 8;
-        String lv = String.format("%d", this.level);
-        String ln = String.format("%d", this.lines);
-        String sc = String.format("%d", this.score);
-        this.graphics.drawString(lv, 350 - (lv.length() - 1) * fontWidth, 330);
-        this.graphics.drawString(ln, 350 - (ln.length() - 1) * fontWidth, 390);
-        this.graphics.drawString(sc, 350 - (sc.length() - 1) * fontWidth, 450);
+        this.graphics.drawString(String.format("%d",this.level), 350, 330);
+        this.graphics.drawString(String.format("%d",this.lines), 350, 390);
+        this.graphics.drawString(String.format("%d",this.score), 340, 450);
+
+        //this.graphics.setFont(statsFont);
+        //this.graphics.drawString("12", 270, 254);
+        //this.graphics.drawString("3698", 270, 304);
+        //this.graphics.drawString("987", 270, 354);
 
         this.bs.show();
         graphics.dispose();
