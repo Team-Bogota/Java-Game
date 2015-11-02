@@ -140,46 +140,95 @@ public class Display extends Canvas {
     private void createMenuFrame() {
         Dimension dimensions = new Dimension(this.width, this.height);
 
+        // ---- Creating buttons for the main Menu
 
         JButton bNewGame = new JButton();
         bNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_NewGame.png")));
         bNewGame.setBorderPainted(true);
         bNewGame.setBounds(79, 237, 305, 38);
-        // bNewGame.setBorder(null);
+        bNewGame.setBorder(null);
         bNewGame.setOpaque(false);
         bNewGame.setContentAreaFilled(false);
+        bNewGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bNewGame.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bNewGame.setBorder(null);
+            }
+        });
 
         JButton bLoadSavedGame = new JButton();
         bLoadSavedGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_LoadSavedGame.png")));
         bLoadSavedGame.setBorderPainted(true);
         bLoadSavedGame.setBounds(79, 275, 305, 38);
-        // bLoadSavedGame.setBorder(null);
+        bLoadSavedGame.setBorder(null);
         bLoadSavedGame.setOpaque(false);
         bLoadSavedGame.setContentAreaFilled(false);
+        bLoadSavedGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bLoadSavedGame.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bLoadSavedGame.setBorder(null);
+            }
+        });
 
         JButton bHighScores = new JButton();
         bHighScores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_HighScore.png")));
         bHighScores.setBorderPainted(true);
         bHighScores.setBounds(79, 313, 305, 38);
-        // bHighScores.setBorder(null);
+        bHighScores.setBorder(null);
         bHighScores.setOpaque(false);
         bHighScores.setContentAreaFilled(false);
+        bHighScores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bHighScores.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bHighScores.setBorder(null);
+            }
+        });
 
         JButton bAbout = new JButton();
         bAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_About.png")));
         bAbout.setBorderPainted(true);
         bAbout.setBounds(79, 351, 305, 38);
-        // bAbout.setBorder(null);
+        bAbout.setBorder(null);
         bAbout.setOpaque(false);
         bAbout.setContentAreaFilled(false);
+        bAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bAbout.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bAbout.setBorder(null);
+            }
+        });
 
         JButton bExit = new JButton();
         bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_Exit.png")));
         bExit.setBorderPainted(true);
         bExit.setBounds(79, 389, 305, 38);
-        // bExit.setBorder(null);
+        bExit.setBorder(null);
         bExit.setOpaque(false);
         bExit.setContentAreaFilled(false);
+        bExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bExit.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bExit.setBorder(null);
+            }
+        });
+
+        // ----
+
 
         this.frame = new JFrame(this.title);
         this.frame.setSize(this.width, this.height);
@@ -193,11 +242,14 @@ public class Display extends Canvas {
         this.canvas.setMaximumSize(dimensions);
         this.canvas.setMinimumSize(dimensions);
 
+        // ---- Adding buttons
         this.frame.add(bNewGame);
         this.frame.add(bLoadSavedGame);
         this.frame.add(bHighScores);
         this.frame.add(bAbout);
         this.frame.add(bExit);
+        // ----
+
         this.frame.add(this.canvas);
 
 
