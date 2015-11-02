@@ -1,7 +1,6 @@
 package display;
 
 import game.Config;
-import game.Game;
 import game.InputHandler;
 import game.KeyGetter;
 
@@ -10,14 +9,12 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Display extends Canvas {
+
+    public boolean newGame;
     private String title;
     private int width, height;
-
     private JFrame frame;
-
     private Canvas canvas;
-
-    public JMenuItem newGame;
 
     public Display(String displayFrame, String title, int width, int height) {
         this.title = title;
@@ -60,7 +57,36 @@ public class Display extends Canvas {
         menu.setBounds(0, 0, 45, 24);
         bar.add(menu);
 
-        newGame = new JMenuItem("New Game");
+        JMenuItem newGame = new JMenuItem("New Game");
+        newGame.addActionListener(e -> {
+            InputHandler.pause = true;
+            JFrame areUSure = new JFrame("Are you sure?");
+            areUSure.setSize(200, 140);
+            areUSure.setLayout(null);
+            areUSure.setLocationRelativeTo(null);
+            areUSure.setResizable(false);
+            areUSure.setVisible(true);
+            areUSure.setResizable(false);
+            JLabel label = new JLabel("Start new game?");
+            label.setBounds(50, 0, 200, 50);
+            JButton okayButton = new JButton("Ok");
+            okayButton.setBounds(30, 60, 50, 30);
+            okayButton.addActionListener(e1 -> {
+                this.newGame = true;
+                InputHandler.pause = false;
+                areUSure.dispose();
+            });
+            JButton noButton = new JButton("No");
+            noButton.setBounds(110, 60, 50, 30);
+            noButton.addActionListener(e1 -> {
+                areUSure.dispose();
+                InputHandler.pause = false;
+            });
+
+            areUSure.add(label);
+            areUSure.add(okayButton);
+            areUSure.add(noButton);
+        });
 
         JMenuItem highScore = new JMenuItem("Highscore");
         highScore.addActionListener((e -> {
@@ -80,7 +106,10 @@ public class Display extends Canvas {
 
             JButton okayButton = new JButton("Okay");
             okayButton.setBounds(50, 80, 100, 30);
-            okayButton.addActionListener(e1 -> alert.dispose());
+            okayButton.addActionListener(e1 ->{
+                InputHandler.pause = false;
+                alert.dispose();
+            });
             alert.add(score);
             alert.add(okayButton);
         }));

@@ -39,6 +39,7 @@ public class Config {
         JButton done = new JButton("Done");
         done.setBounds(150, 220, 100, 30);
         done.addActionListener(e -> {
+            InputHandler.pause = false;
             options.dispose();
             saveChanges();
         });

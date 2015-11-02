@@ -28,7 +28,6 @@ public class GameState extends State {
 
     private int ticks = 0;
     private int speed = 15;
-    private boolean newGame;
 
     public GameState(String title, int width, int height) {
 
@@ -39,7 +38,6 @@ public class GameState extends State {
 
         this.currentShape = new Shape();
         this.nextShape = new Shape();
-        this.newGame = false;
     }
 
     private void reset() {
@@ -53,19 +51,15 @@ public class GameState extends State {
         this.board = new int[20][10];
         this.currentShape = new Shape();
         this.nextShape = new Shape();
-        this.newGame = false;
+        this.display.newGame = false;
     }
 
     @Override
     public void tick() {
 
-        display.newGame.addActionListener((e -> {
-            this.newGame = true;
-        }));
-        if (newGame) {
+        if (display.newGame) {
             reset();
         }
-        //here goes shape moves logic
 
         //update speed
         this.speed = 15 - this.level;
@@ -129,6 +123,12 @@ public class GameState extends State {
             inputHandler.rotate = false;
         }
 
+        if (inputHandler.instantDown) {
+            while (canMove(currentShape, 0, 1)) {
+                currentShape.setY(currentShape.getY() + 1);
+            }
+            inputHandler.instantDown = false;
+        }
 
         ticks++;
     }
@@ -241,7 +241,7 @@ public class GameState extends State {
                 this.lines++;
                 this.level = (lines / 10) + 1;
 
-                if (this.level > 10){
+                if (this.level > 10) {
                     this.level = 10;
                 }
 
