@@ -3,6 +3,7 @@ package display;
 import game.Config;
 import game.InputHandler;
 import game.KeyGetter;
+import gfx.ImageLoader;
 import states.GameState;
 import states.StateManager;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class Display extends Canvas {
@@ -110,18 +112,13 @@ public class Display extends Canvas {
 
             JButton okayButton = new JButton("Okay");
             okayButton.setBounds(50, 80, 100, 30);
-            okayButton.addActionListener(e1 -> {
+            okayButton.addActionListener(e1 ->{
                 InputHandler.pause = false;
                 alert.dispose();
             });
             alert.add(score);
             alert.add(okayButton);
         }));
-
-        JMenuItem save = new JMenuItem("Save game");
-        save.addActionListener(e -> {
-            GameState.isSaved = true;
-        });
 
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener((e -> {
@@ -135,7 +132,7 @@ public class Display extends Canvas {
             Config.openConfig(frame);
 
         });
-        menu.add(save);
+
         menu.add(newGame);
         menu.add(highScore);
         menu.add(options);
@@ -162,24 +159,11 @@ public class Display extends Canvas {
         this.canvas.setMinimumSize(dimensions);
 
 
+
         // ---- Creating buttons for the main Menu
 
-        JButton bNewGame = new JButton();
-        bNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_NewGame.png")));
-        bNewGame.setBorderPainted(true);
-        bNewGame.setBounds(79, 237, 305, 38);
-        bNewGame.setBorder(null);
-        bNewGame.setOpaque(false);
-        bNewGame.setContentAreaFilled(false);
-        bNewGame.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bNewGame.setBorder(BorderFactory.createBevelBorder(1));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bNewGame.setBorder(null);
-            }
-        });
+        // Button - New Game
+        JButton bNewGame = createNewMainMenuButton("/images/MenuButton_NewGame.png", 79, 237, 305, 38);
         bNewGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -188,85 +172,25 @@ public class Display extends Canvas {
             }
         });
 
-        JButton bLoadSavedGame = new JButton();
-        bLoadSavedGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_LoadSavedGame.png")));
-        bLoadSavedGame.setBorderPainted(true);
-        bLoadSavedGame.setBounds(79, 275, 305, 38);
-        bLoadSavedGame.setBorder(null);
-        bLoadSavedGame.setOpaque(false);
-        bLoadSavedGame.setContentAreaFilled(false);
-        bLoadSavedGame.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bLoadSavedGame.setBorder(BorderFactory.createBevelBorder(1));
-            }
+        // Button - Load Saved Game
+        JButton bLoadSavedGame = createNewMainMenuButton("/images/MenuButton_LoadSavedGame.png", 79, 275, 305, 38);
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bLoadSavedGame.setBorder(null);
-            }
-        });
-        bLoadSavedGame.addActionListener(e -> {
-            hideFrame();
-            StateManager.setState(new GameState("Tetris", 456, 553));
-            GameState.isLoaded = true;
-        });
+        // Button - High Scores
+        JButton bHighScores = createNewMainMenuButton("/images/MenuButton_HighScore.png", 79, 313, 305, 38);
 
-        JButton bHighScores = new JButton();
-        bHighScores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_HighScore.png")));
-        bHighScores.setBorderPainted(true);
-        bHighScores.setBounds(79, 313, 305, 38);
-        bHighScores.setBorder(null);
-        bHighScores.setOpaque(false);
-        bHighScores.setContentAreaFilled(false);
-        bHighScores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bHighScores.setBorder(BorderFactory.createBevelBorder(1));
-            }
+        // Button - About
+        JButton bAbout = createNewMainMenuButton("/images/MenuButton_About.png", 79, 351, 305, 38);
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bHighScores.setBorder(null);
-            }
-        });
-
-        JButton bAbout = new JButton();
-        bAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_About.png")));
-        bAbout.setBorderPainted(true);
-        bAbout.setBounds(79, 351, 305, 38);
-        bAbout.setBorder(null);
-        bAbout.setOpaque(false);
-        bAbout.setContentAreaFilled(false);
-        bAbout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bAbout.setBorder(BorderFactory.createBevelBorder(1));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bAbout.setBorder(null);
-            }
-        });
-
-        JButton bExit = new JButton();
-        bExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuButton_Exit.png")));
-        bExit.setBorderPainted(true);
-        bExit.setBounds(79, 389, 305, 38);
-        bExit.setBorder(null);
-        bExit.setOpaque(false);
-        bExit.setContentAreaFilled(false);
-        bExit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bExit.setBorder(BorderFactory.createBevelBorder(1));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bExit.setBorder(null);
-            }
-        });
+        // Button - Exit
+        JButton bExit = createNewMainMenuButton("/images/MenuButton_Exit.png", 79, 389, 305, 38);
         bExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-        // ----
+
+        // ------------------------
 
 
         // ---- Adding buttons
@@ -275,7 +199,7 @@ public class Display extends Canvas {
         this.frame.add(bHighScores);
         this.frame.add(bAbout);
         this.frame.add(bExit);
-        // ----
+        // --------------------
 
         this.frame.add(this.canvas);
 
@@ -284,6 +208,28 @@ public class Display extends Canvas {
 
 
     }
+
+    public static JButton createNewMainMenuButton(String source, int positionX, int positionY, int sizeX, int sizeY) {
+        JButton newButton = new JButton();
+        newButton.setIcon(new javax.swing.ImageIcon(ImageLoader.class.getResource(source)));
+        newButton.setBorderPainted(true);
+        newButton.setBounds(positionX, positionY, sizeX, sizeY);
+        newButton.setBorder(null);
+        newButton.setOpaque(false);
+        newButton.setContentAreaFilled(false);
+        newButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                newButton.setBorder(BorderFactory.createBevelBorder(1));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                newButton.setBorder(null);
+            }
+        });
+
+        return newButton;
+    }
+
 
     public void hideFrame() {
         this.frame.setVisible(false);
