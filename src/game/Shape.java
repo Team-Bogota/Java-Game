@@ -2,7 +2,7 @@ package game;
 
 import java.util.Random;
 
-public class Shape {
+public class Shape implements Cloneable {
     private enum Tetrominoes {
         NoShape,
         IShape,
@@ -29,6 +29,11 @@ public class Shape {
         this.setCoords(this.shape);
         this.x = 4;
         this.y = 0;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public int[][] getCoords() {

@@ -8,6 +8,7 @@ import gfx.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.Objects;
 
 // This is the main state // AleksandarTanev
 public class GameState extends State {
@@ -77,7 +78,7 @@ public class GameState extends State {
                         int blockX = shapeX + col;
                         int blockY = shapeY + row;
                         if (blockColor != 0) {
-                            board[blockY][blockX] = blockColor;
+                            this.board[blockY][blockX] = blockColor;
                         }
                     }
                 }
@@ -116,7 +117,10 @@ public class GameState extends State {
         }
         //check for rotate
         if (inputHandler.rotate) {
-            currentShape.rotateClockwise();
+
+            if (canRotate(currentShape)) {
+                currentShape.rotateClockwise();
+            }
             inputHandler.rotate = false;
         }
 
@@ -201,6 +205,36 @@ public class GameState extends State {
                     return false;
                 }
             }
+        }
+
+        return true;
+    }
+
+    private boolean canRotate(Shape shape) {
+        try {
+            Shape rotatedShape = (Shape) shape.clone();
+            rotatedShape.rotateClockwise();
+
+            int shapeX = rotatedShape.getX();
+            int shapeY = rotatedShape.getY();
+
+            for (int row = 0; row < rotatedShape.getCoords().length; row++) {
+                for (int col = 0; col < rotatedShape.getCoords()[row].length; col++) {
+
+                    int blockColor = rotatedShape.getCoords()[row][col];
+                    int blockX = shapeX + col;
+                    int blockY = shapeY + row;
+
+                    if (blockColor != 0 && (blockY < 0 || blockY >= this.board.length || blockX < 0 || blockX >= this.board[blockY].length)) {
+                        return false;
+                    } else if (blockColor != 0 && this.board[blockY][blockX] != 0) {
+                        return false;
+                    }
+                }
+            }
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
 
         return true;
