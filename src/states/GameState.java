@@ -1,6 +1,8 @@
 package states;
 
+import com.sun.corba.se.impl.orbutil.ObjectWriter;
 import display.Display;
+import game.Config;
 import game.InputHandler;
 import game.Shape;
 import gfx.ImageLoader;
@@ -8,6 +10,7 @@ import gfx.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.*;
 import java.util.Objects;
 
 // This is the main state // AleksandarTanev
@@ -29,6 +32,9 @@ public class GameState extends State {
 
     private int ticks;
     private int speed;
+    public static boolean isSaved;
+    public static boolean isLoaded;
+
 
     public GameState(String title, int width, int height) {
 
@@ -50,6 +56,62 @@ public class GameState extends State {
         this.currentShape = new Shape();
         this.nextShape = new Shape();
         this.display.newGame = false;
+
+        this.isSaved = false;
+    }
+
+    public void loadGame(){
+        File directory = new File(Config.getDefaultDirectory(), "/Tetris");
+        File save = new File(directory, "/save.save");
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(save))) {
+            this.score = ois.readInt();
+            this.lines = ois.readInt();
+            this.level = ois.readInt();
+            this.ticks = ois.readInt();
+            this.speed = ois.readInt();
+
+            this.board = (int[][])ois.readObject();
+            this.currentShape = (Shape) ois.readObject();
+            this.nextShape = (Shape) ois.readObject();
+            this.display.newGame = ois.readBoolean();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //create file if dont exist and write current key config
+    public void saveGame() {
+        File directory = new File(Config.getDefaultDirectory(), "/Tetris");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        File save = new File(directory, "/save.save");
+
+        try (ObjectOutputStream oos =
+                     new ObjectOutputStream(new BufferedOutputStream(
+                             new FileOutputStream(save)))) {
+            oos.writeInt(this.score);
+            oos.writeInt(this.lines);
+            oos.writeInt(this.level);
+            oos.writeInt(this.ticks);
+            oos.writeInt(this.speed);
+
+            oos.writeObject(this.board);
+            oos.writeObject(this.currentShape);
+            oos.writeObject(this.nextShape);
+            oos.writeBoolean(this.display.newGame);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -57,6 +119,16 @@ public class GameState extends State {
 
         if (display.newGame) {
             init();
+        }
+
+        if (isSaved){
+            saveGame();
+            isSaved = false;
+        }
+
+        if (isLoaded){
+            loadGame();
+            isLoaded = false;
         }
 
         //update speed
