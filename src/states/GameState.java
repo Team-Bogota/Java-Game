@@ -26,6 +26,7 @@ public class GameState extends State {
     private int lines;
     private int level;
     private int[][] board;
+    boolean hasDied = false;
 
     private Shape currentShape;
     private Shape nextShape;
@@ -56,6 +57,7 @@ public class GameState extends State {
         this.currentShape = new Shape();
         this.nextShape = new Shape();
         this.display.newGame = false;
+        this.hasDied = false;
 
         this.isSaved = false;
     }
@@ -154,10 +156,15 @@ public class GameState extends State {
                         }
                     }
                 }
-                this.score += 2;
+                if (!this.hasDied) {
+                    this.score += 2;
+                }
                 RemoveSolidLine();
-                this.currentShape = this.nextShape;
-                this.nextShape = new Shape();
+                GameOver();
+                if (!this.hasDied) {
+                    this.currentShape = this.nextShape;
+                    this.nextShape = new Shape();
+                }
             }
 
             ticks = 0;
@@ -254,6 +261,10 @@ public class GameState extends State {
         this.graphics.drawString(lv, 350 - lv.length() / 2 * fontWidth, 330);
         this.graphics.drawString(ln, 350 - ln.length() / 2 * fontWidth, 390);
         this.graphics.drawString(sc, 350 - sc.length() / 2 * fontWidth, 450);
+
+        if (this.hasDied){
+            graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 25, 100, null);
+        }
 
         this.bs.show();
         graphics.dispose();
@@ -393,14 +404,14 @@ public class GameState extends State {
 
     }
 
-    public boolean GameOver(){
+    private void GameOver(){
 
         for (int i = 0; i < this.board[0].length; i++) {
             if (this.board[0][i] != 0){
-                return true;
+                this.hasDied = true;
+                break;
             }
         }
 
-        return false;
     }
 }
