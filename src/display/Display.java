@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class Display extends Canvas {
@@ -112,13 +111,18 @@ public class Display extends Canvas {
 
             JButton okayButton = new JButton("Okay");
             okayButton.setBounds(50, 80, 100, 30);
-            okayButton.addActionListener(e1 ->{
+            okayButton.addActionListener(e1 -> {
                 InputHandler.pause = false;
                 alert.dispose();
             });
             alert.add(score);
             alert.add(okayButton);
         }));
+
+        JMenuItem save = new JMenuItem("Save game");
+        save.addActionListener(e -> {
+            GameState.isSaved = true;
+        });
 
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener((e -> {
@@ -132,7 +136,7 @@ public class Display extends Canvas {
             Config.openConfig(frame);
 
         });
-
+        menu.add(save);
         menu.add(newGame);
         menu.add(highScore);
         menu.add(options);
@@ -229,7 +233,6 @@ public class Display extends Canvas {
 
         return newButton;
     }
-
 
     public void hideFrame() {
         this.frame.setVisible(false);
