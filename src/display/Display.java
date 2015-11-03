@@ -178,6 +178,11 @@ public class Display extends Canvas {
 
         // Button - Load Saved Game
         JButton bLoadSavedGame = createNewMainMenuButton("/images/MenuButton_LoadSavedGame.png", 79, 275, 305, 38);
+        bLoadSavedGame.addActionListener(e -> {
+            hideFrame();
+            StateManager.setState(new GameState("Tetris", 456, 553));
+            GameState.isLoaded = true;
+        });
 
         // Button - High Scores
         JButton bHighScores = createNewMainMenuButton("/images/MenuButton_HighScore.png", 79, 313, 305, 38);
