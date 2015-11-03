@@ -320,4 +320,15 @@ public class GameState extends State {
         }
 
     }
+
+    public boolean GameOver(){
+
+        for (int i = 0; i < this.board[0].length; i++) {
+            if (this.board[0][i] != 0){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
