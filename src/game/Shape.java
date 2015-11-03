@@ -1,8 +1,9 @@
 package game;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Shape implements Cloneable {
+public class Shape implements Cloneable, Serializable {
     private enum Tetrominoes {
         NoShape,
         IShape,
