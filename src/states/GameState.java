@@ -244,12 +244,12 @@ public class GameState extends State {
     public void RemoveSolidLine() {
 
 
-        int[] nullRow = new int[this.board[0].length];
+        //int[] nullRow = new int[this.board[0].length];
         int counter = 0;
 
-        for (int i = 0; i < nullRow.length; i++) {
+/*        for (int i = 0; i < nullRow.length; i++) {
             nullRow[i] = 0;
-        }
+        }*/
 
         for (int row = 0; row < this.board.length; row++) {
 
@@ -265,7 +265,10 @@ public class GameState extends State {
 
             if (isLine) {
                 //make the full row null
-                this.board[row] = nullRow;
+                //this.board[row] = nullRow;
+                for (int col = 0; col < this.board[row].length; col++) {
+                    this.board[row][col] = 0;
+                }
                 //update Score, Lines and Level
                 counter++;
                 this.lines++;
@@ -280,8 +283,14 @@ public class GameState extends State {
                 // exchange rows
                 for (int innerRow = row - 1; innerRow >= 0; innerRow--) {
 
-                    this.board[exchangedRow] = this.board[innerRow];
-                    this.board[innerRow] = nullRow;
+                    //this.board[exchangedRow] = this.board[innerRow];
+                    for (int col = 0; col < this.board[row].length; col++) {
+                        this.board[exchangedRow][col] = this.board[innerRow][col];
+                    }
+                    //this.board[innerRow] = nullRow;
+                    for (int col = 0; col < this.board[innerRow].length; col++) {
+                        this.board[innerRow][col] = 0;
+                    }
 
                     exchangedRow--;
                     if (exchangedRow < 0) {
