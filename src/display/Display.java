@@ -190,6 +190,12 @@ public class Display extends Canvas {
 
         // Button - About
         JButton bAbout = createNewMainMenuButton("/images/MenuButton_About.png", 79, 351, 305, 38);
+        bAbout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DisplayAbout.createAboutWindow();
+            }
+        });
 
         // Button - Exit
         JButton bExit = createNewMainMenuButton("/images/MenuButton_Exit.png", 79, 389, 305, 38);
