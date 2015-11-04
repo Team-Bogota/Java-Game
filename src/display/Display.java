@@ -136,8 +136,9 @@ public class Display extends Canvas {
             Config.openConfig(frame);
 
         });
-        menu.add(save);
+
         menu.add(newGame);
+        menu.add(save);
         menu.add(highScore);
         menu.add(options);
         menu.add(exit);
