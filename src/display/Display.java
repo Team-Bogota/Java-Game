@@ -11,7 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.*;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Display extends Canvas {
 
@@ -96,8 +98,8 @@ public class Display extends Canvas {
         JMenuItem highScore = new JMenuItem("Highscore");
         highScore.addActionListener((e -> {
             InputHandler.pause = true;
-            //TODO : logic to display highscore;
-            int testHighScore = 0;
+
+            int testHighScore = readHighScore();
             JFrame alert = new JFrame("High Score");
             alert.setSize(200, 150);
             alert.setLayout(null);
@@ -187,6 +189,10 @@ public class Display extends Canvas {
 
         // Button - High Scores
         JButton bHighScores = createNewMainMenuButton("/images/MenuButton_HighScore.png", 79, 313, 305, 38);
+        bHighScores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { DisplayHighScore.createHighScoreWindow();}
+        });
 
         // Button - About
         JButton bAbout = createNewMainMenuButton("/images/MenuButton_About.png", 79, 351, 305, 38);
@@ -244,6 +250,34 @@ public class Display extends Canvas {
         });
 
         return newButton;
+    }
+
+    private int readHighScore(){
+
+        int highScore = 0;
+
+        File source = new File("score.save");
+        SortedSet<Integer> scores = new TreeSet<>();
+
+        if (source.exists()){
+
+            try(ObjectInputStream inputStream = new ObjectInputStream(
+                    new BufferedInputStream(
+                            new FileInputStream(
+                                    new File("score.save") )))) {
+
+                scores = (SortedSet<Integer>) inputStream.readObject();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!scores.isEmpty()){
+            highScore = scores.last();
+        }
+
+        return highScore;
     }
 
     public void hideFrame() {

@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.*;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 // This is the main state // AleksandarTanev
 public class GameState extends State {
@@ -27,6 +29,7 @@ public class GameState extends State {
     private int level;
     private int[][] board;
     boolean hasDied = false;
+    boolean hasSavedScore = false;
 
     private Shape currentShape;
     private Shape nextShape;
@@ -58,6 +61,7 @@ public class GameState extends State {
         this.nextShape = new Shape();
         this.display.newGame = false;
         this.hasDied = false;
+        this.hasSavedScore = false;
 
         this.isSaved = false;
     }
@@ -159,11 +163,15 @@ public class GameState extends State {
                 if (!this.hasDied) {
                     this.score += 2;
                 }
-                RemoveSolidLine();
+
                 GameOver();
+
                 if (!this.hasDied) {
+                    RemoveSolidLine();
                     this.currentShape = this.nextShape;
                     this.nextShape = new Shape();
+                }else if (!hasSavedScore){
+                    saveScore();
                 }
             }
 
@@ -413,5 +421,42 @@ public class GameState extends State {
             }
         }
 
+    }
+
+    private void saveScore(){
+
+
+        File source = new File("score.save");
+        SortedSet<Integer> scores = new TreeSet<>();
+
+
+        if (source.exists()){
+
+            try(ObjectInputStream inputStream = new ObjectInputStream(
+                    new BufferedInputStream(
+                            new FileInputStream(
+                                    new File("score.save") )))) {
+
+                scores = (SortedSet<Integer>) inputStream.readObject();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        scores.add(this.score);
+
+        try(ObjectOutputStream outputWriter = new ObjectOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream(
+                                new File("score.save"))))) {
+
+            outputWriter.writeObject(scores);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.hasSavedScore = true;
     }
 }
