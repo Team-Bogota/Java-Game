@@ -65,6 +65,8 @@ public class GameState extends State {
         this.hasSavedScore = false;
 
         this.isSaved = false;
+
+        Sound.playLoop("resources/sounds/gametune.wav");
     }
 
     public void loadGame(){
@@ -408,7 +410,7 @@ public class GameState extends State {
                 }
 
 
-                Sound.playSound("resources/sounds/tick.wav");
+                Sound.playOnce("resources/sounds/tick.wav");
 
             }
 
