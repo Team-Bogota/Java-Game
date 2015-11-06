@@ -7,6 +7,7 @@ import game.InputHandler;
 import game.Shape;
 import gfx.ImageLoader;
 import gfx.SpriteSheet;
+import sound.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -39,6 +40,8 @@ public class GameState extends State {
     public static boolean isSaved;
     public static boolean isLoaded;
 
+    private Sound dropLine;
+
 
     public GameState(String title, int width, int height) {
 
@@ -64,6 +67,8 @@ public class GameState extends State {
         this.hasSavedScore = false;
 
         this.isSaved = false;
+
+        dropLine = new Sound("resources/sounds/tick.wav");
     }
 
     public void loadGame(){
@@ -405,6 +410,9 @@ public class GameState extends State {
                     default:
                         break;
                 }
+
+
+                dropLine.playSound();
 
             }
 
