@@ -1,26 +1,26 @@
 package sound;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 
-public class Sound {
-    private String soundName;
+public final class Sound {
 
-    public Sound(String soundName) {
-        this.soundName = soundName;
-    }
+    public static void playSound(String soundName) {
 
-    public void playSound() {
+        AudioInputStream audioInputStream = null;
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.soundName).getAbsoluteFile());
+            audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch (Exception ex) {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
         }
+
     }
 }

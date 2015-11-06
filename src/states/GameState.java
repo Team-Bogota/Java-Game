@@ -40,8 +40,6 @@ public class GameState extends State {
     public static boolean isSaved;
     public static boolean isLoaded;
 
-    private Sound dropLine;
-
 
     public GameState(String title, int width, int height) {
 
@@ -67,8 +65,6 @@ public class GameState extends State {
         this.hasSavedScore = false;
 
         this.isSaved = false;
-
-        dropLine = new Sound("resources/sounds/tick.wav");
     }
 
     public void loadGame(){
@@ -412,7 +408,7 @@ public class GameState extends State {
                 }
 
 
-                dropLine.playSound();
+                Sound.playSound("resources/sounds/tick.wav");
 
             }
 
