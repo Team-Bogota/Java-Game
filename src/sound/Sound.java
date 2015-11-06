@@ -4,11 +4,11 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public final class Sound {
+public class Sound {
+    private static AudioInputStream audioInputStream;
 
     public static void playOnce(String soundName) {
 
-        AudioInputStream audioInputStream = null;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
@@ -21,7 +21,6 @@ public final class Sound {
 
     public static void playLoop(String soundName) {
 
-        AudioInputStream audioInputStream = null;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
