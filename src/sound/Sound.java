@@ -5,29 +5,30 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sound {
-    private static AudioInputStream audioInputStream;
+    private AudioInputStream audioInputStream;
+    private Clip clip;
 
-    public static void playOnce(String soundName) {
-
+    public Sound(String soundName) {
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
+            this.audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            this.clip = AudioSystem.getClip();
+            clip.open(this.audioInputStream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    public static void playLoop(String soundName) {
+    public void play() {
+        this.clip.start();
+    }
 
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.loop(1000);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+    public void loop() {
+        this.clip.loop(1000);
+
+    }
+
+    public void stop() {
+        this.clip.stop();
+        this.clip.close();
     }
 }
