@@ -75,7 +75,7 @@ public class GameState extends State {
         this.gameTune.loop(1000);
     }
 
-    public void loadGame(){
+    public void loadGame() {
         File directory = new File(Config.getDefaultDirectory(), "/Tetris");
         File save = new File(directory, "/save.save");
 
@@ -86,7 +86,7 @@ public class GameState extends State {
             this.ticks = ois.readInt();
             this.speed = ois.readInt();
 
-            this.board = (int[][])ois.readObject();
+            this.board = (int[][]) ois.readObject();
             this.currentShape = (Shape) ois.readObject();
             this.nextShape = (Shape) ois.readObject();
             this.display.newGame = ois.readBoolean();
@@ -137,12 +137,12 @@ public class GameState extends State {
             init();
         }
 
-        if (isSaved){
+        if (isSaved) {
             saveGame();
             isSaved = false;
         }
 
-        if (isLoaded){
+        if (isLoaded) {
             loadGame();
             isLoaded = false;
         }
@@ -180,7 +180,7 @@ public class GameState extends State {
                     RemoveSolidLine();
                     this.currentShape = this.nextShape;
                     this.nextShape = new Shape();
-                }else if (!hasSavedScore){
+                } else if (!hasSavedScore) {
                     saveScore();
                 }
             }
@@ -280,7 +280,7 @@ public class GameState extends State {
         this.graphics.drawString(ln, 350 - ln.length() / 2 * fontWidth, 390);
         this.graphics.drawString(sc, 350 - sc.length() / 2 * fontWidth, 450);
 
-        if (this.hasDied){
+        if (this.hasDied) {
             this.gameTune.stop();
             graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 55, 200, null);
         }
@@ -424,7 +424,7 @@ public class GameState extends State {
 
     }
 
-    private void GameOver(){
+    private void GameOver() {
 
         for (int i = 0; i < this.board[1].length; i++) {
             if (this.board[1][i] != 0) {
@@ -435,19 +435,19 @@ public class GameState extends State {
 
     }
 
-    private void saveScore(){
+    private void saveScore() {
 
 
-        File source = new File("score.save");
+        File source = new File("resources/others/score.save");
         SortedSet<Integer> scores = new TreeSet<>();
 
 
-        if (source.exists()){
+        if (source.exists()) {
 
-            try(ObjectInputStream inputStream = new ObjectInputStream(
+            try (ObjectInputStream inputStream = new ObjectInputStream(
                     new BufferedInputStream(
                             new FileInputStream(
-                                    new File("score.save") )))) {
+                                    new File("resources/others/score.save"))))) {
 
                 scores = (SortedSet<Integer>) inputStream.readObject();
 
@@ -458,10 +458,10 @@ public class GameState extends State {
 
         scores.add(this.score);
 
-        try(ObjectOutputStream outputWriter = new ObjectOutputStream(
+        try (ObjectOutputStream outputWriter = new ObjectOutputStream(
                 new BufferedOutputStream(
                         new FileOutputStream(
-                                new File("score.save"))))) {
+                                new File("resources/others/score.save"))))) {
 
             outputWriter.writeObject(scores);
 

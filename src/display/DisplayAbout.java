@@ -1,6 +1,9 @@
 package display;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -31,7 +34,7 @@ public class DisplayAbout {
         StringBuilder sb = new StringBuilder();
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader("resources/txt/about.txt")
+                new FileReader("resources/others/about.txt")
         )) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -45,6 +48,10 @@ public class DisplayAbout {
         }
 
         aboutText.setText(sb.toString());
+        StyledDocument doc = aboutText.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
         frame.add(jsp);
 
 

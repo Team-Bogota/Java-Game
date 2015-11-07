@@ -103,7 +103,7 @@ public class Config {
             directory.mkdirs();
         }
 
-        File config = new File(directory, "/config.txt");
+        File config = new File(directory, "/config.others");
         if (!config.exists()) {
             config.createNewFile();
             saveConfig();
@@ -168,7 +168,7 @@ public class Config {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        File config = new File(directory, "/config.txt");
+        File config = new File(directory, "/config.others");
         PrintWriter pw = new PrintWriter(config);
         pw.println("right:" + right);
         pw.println("left:" + left);

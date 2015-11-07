@@ -1,6 +1,9 @@
 package display;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,16 +28,16 @@ public class DisplayHighScore {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        File source = new File("score.save");
+        File source = new File("resources/others/score.save");
         SortedSet<Integer> scores = new TreeSet<>();
 
 
-        if (source.exists()){
+        if (source.exists()) {
 
-            try(ObjectInputStream inputStream = new ObjectInputStream(
+            try (ObjectInputStream inputStream = new ObjectInputStream(
                     new BufferedInputStream(
                             new FileInputStream(
-                                    new File("score.save") )))) {
+                                    new File("resources/others/score.save"))))) {
 
                 scores = (SortedSet<Integer>) inputStream.readObject();
 
@@ -49,19 +52,18 @@ public class DisplayHighScore {
 
         System.out.println(scoresList.size());
 
-        for (int i = scoresList.size() - 1, j = 1; (i >= 0) && (i >= scoresList.size() - 5) ; i--, j++) {
+        for (int i = scoresList.size() - 1, j = 1; (i >= 0) && (i >= scoresList.size() - 5); i--, j++) {
 
-            textBuilder.append(j);
-            textBuilder.append(". ");
+            textBuilder.append(String.format("%d.     ", j));
             textBuilder.append(scoresList.get(i));
-           textBuilder.append((System.getProperty("line.separator")));
+            textBuilder.append((System.getProperty("line.separator")));
 
         }
 
-        JLabel labelScoreText = new JLabel("Score", SwingConstants.CENTER);
-        labelScoreText.setText(textBuilder.toString());
+        JTextPane paneScoreText = new JTextPane();
+        paneScoreText.setText(textBuilder.toString());
 
-        frame.add(labelScoreText);
+        frame.add(paneScoreText);
 
 
     }

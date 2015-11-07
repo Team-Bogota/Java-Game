@@ -3,7 +3,7 @@ This is a TEAM PROJECT for
 Java Fundamentals @SoftUni
 October 2015
 
-===TEAM BOGOTA=============
+======= TEAM BOGOTA =======
 
 1) Aleksandar Tanev
 2) Ivan Yanchev
