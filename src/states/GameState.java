@@ -282,7 +282,7 @@ public class GameState extends State {
 
         if (this.hasDied){
             this.gameTune.stop();
-            graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 35, 150, null);
+            graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 55, 200, null);
         }
 
         this.bs.show();
