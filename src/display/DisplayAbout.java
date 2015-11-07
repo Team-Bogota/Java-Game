@@ -1,6 +1,10 @@
 package display;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class DisplayAbout {
@@ -20,9 +24,28 @@ public class DisplayAbout {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel labelAboutText = new JLabel("Test", SwingConstants.CENTER);
-        labelAboutText.setText("Here we will have information about the game.");
-        frame.add(labelAboutText);
+
+        JTextPane aboutText = new JTextPane();
+        JScrollPane jsp = new JScrollPane(aboutText);
+
+        StringBuilder sb = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("resources/txt/about.txt")
+        )) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        aboutText.setText(sb.toString());
+        frame.add(jsp);
 
 
     }
