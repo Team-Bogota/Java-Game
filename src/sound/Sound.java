@@ -6,29 +6,27 @@ import java.io.IOException;
 
 public class Sound {
     private AudioInputStream audioInputStream;
+    private File file;
     private Clip clip;
 
-    public Sound(String soundName) {
+    public Sound(String soundFileName) {
+        this.file = new File(soundFileName);
+    }
+
+    public void loop(int loops) {
         try {
-            this.audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            this.audioInputStream = AudioSystem.getAudioInputStream(this.file);
             this.clip = AudioSystem.getClip();
-            clip.open(this.audioInputStream);
+            this.clip.open(this.audioInputStream);
+            this.clip.loop(loops);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    public void play() {
-        this.clip.start();
-    }
-
-    public void loop() {
-        this.clip.loop(1000);
-
-    }
-
     public void stop() {
-        this.clip.stop();
-        this.clip.close();
+        if (this.clip.isRunning()) {
+            this.clip.stop();
+        }
     }
 }

@@ -72,7 +72,7 @@ public class GameState extends State {
         this.gameTune = new Sound("resources/sounds/gametune.wav");
         this.lineClear = new Sound("resources/sounds/tick.wav");
 
-        this.gameTune.loop();
+        this.gameTune.loop(1000);
     }
 
     public void loadGame(){
@@ -282,7 +282,7 @@ public class GameState extends State {
 
         if (this.hasDied){
             this.gameTune.stop();
-            graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 25, 100, null);
+            graphics.drawImage(ImageLoader.loadImage("/images/GameOver.png"), 35, 150, null);
         }
 
         this.bs.show();
@@ -417,9 +417,7 @@ public class GameState extends State {
                         break;
                 }
 
-
-                this.lineClear.play();
-
+                this.lineClear.loop(0);
             }
 
         }
@@ -428,8 +426,8 @@ public class GameState extends State {
 
     private void GameOver(){
 
-        for (int i = 0; i < this.board[0].length; i++) {
-            if (this.board[0][i] != 0){
+        for (int i = 0; i < this.board[1].length; i++) {
+            if (this.board[1][i] != 0) {
                 this.hasDied = true;
                 break;
             }
