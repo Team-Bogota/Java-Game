@@ -99,7 +99,7 @@ public class Display extends Canvas {
         highScore.addActionListener((e -> {
             InputHandler.pause = true;
 
-            int testHighScore = readHighScore();
+            int currentHighScore = readHighScore();
             JFrame alert = new JFrame("High Score");
             alert.setSize(200, 150);
             alert.setLayout(null);
@@ -108,7 +108,7 @@ public class Display extends Canvas {
             alert.setVisible(true);
             alert.setResizable(false);
 
-            JLabel score = new JLabel("The highscore is: " + testHighScore);
+            JLabel score = new JLabel("The highscore is: " + currentHighScore);
             score.setBounds(0, 0, 200, 50);
 
             JButton okayButton = new JButton("Okay");
@@ -256,7 +256,7 @@ public class Display extends Canvas {
 
         int highScore = 0;
 
-        File source = new File("score.save");
+        File source = new File("resources/others/score.save");
         SortedSet<Integer> scores = new TreeSet<>();
 
         if (source.exists()){
@@ -264,7 +264,7 @@ public class Display extends Canvas {
             try(ObjectInputStream inputStream = new ObjectInputStream(
                     new BufferedInputStream(
                             new FileInputStream(
-                                    new File("score.save") )))) {
+                                    new File("resources/others/score.save") )))) {
 
                 scores = (SortedSet<Integer>) inputStream.readObject();
 
